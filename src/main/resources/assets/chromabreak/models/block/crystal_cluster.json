@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "chromabreak:block/crystal_cluster_base"
+  }
+}
