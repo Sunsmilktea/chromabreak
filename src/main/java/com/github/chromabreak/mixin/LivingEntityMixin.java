@@ -366,7 +366,7 @@ public class LivingEntityMixin {
             // 忽略异常，继续其他检查
         }
 
-        // Method 3: Check item ID or type for special items
+        // Method 3: Check item ID or type for special item
         // 方法3：检查特殊物品的ID或类型
         final net.minecraft.resources.ResourceLocation itemId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(mainHandItem.getItem());
         if (null != itemId) {

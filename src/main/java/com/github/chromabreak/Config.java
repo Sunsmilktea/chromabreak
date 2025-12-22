@@ -178,14 +178,14 @@ public enum Config {
      * 匹配这些模式的物品造成的伤害会直接造成血量伤害，不经过韧性系统
      * <p>
      * List of item ID patterns that can bypass the toughness system
-     * Damage from items matching these patterns will deal direct health damage, bypassing the toughness system
+     * Damage from item matching these patterns will deal direct health damage, bypassing the toughness system
      */
     @SuppressWarnings("unchecked")
     public static final ModConfigSpec.ConfigValue<List<? extends String>> BYPASS_ITEM_PATTERNS = Config.BUILDER
             .comment(
                     "List of item ID patterns that can bypass the toughness system.\n",
-                    "Damage from items matching these patterns will deal direct health damage, bypassing the toughness system.\n",
-                    "Patterns are matched using startsWith, so 'avaritia:infinity' matches all items starting with 'avaritia:infinity'.\n",
+                    "Damage from item matching these patterns will deal direct health damage, bypassing the toughness system.\n",
+                    "Patterns are matched using startsWith, so 'avaritia:infinity' matches all item starting with 'avaritia:infinity'.\n",
                     "Examples: avaritia:infinity, cgm:, techguns:\n",
                     "可以绕过韧性系统的物品ID模式列表。\n",
                     "匹配这些模式的物品造成的伤害会直接造成血量伤害，不经过韧性系统。\n",

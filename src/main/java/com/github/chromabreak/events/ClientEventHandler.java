@@ -145,7 +145,7 @@ public enum ClientEventHandler {
 enum PerformanceCache {
     ;
     // 最大渲染距离（方块）
-    // Maximum render distance (blocks)
+    // Maximum render distance (block)
     private static final double MAX_RENDER_DISTANCE = 20.0;
     private static final long CONFIG_CHECK_INTERVAL = 1000; // 1 second
     // 缓存的配置值

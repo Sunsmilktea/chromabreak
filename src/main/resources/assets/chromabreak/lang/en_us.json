@@ -1,5 +1,5 @@
 {
-  "itemGroup.chromabreak": "Example Mod Tab",
+  "itemGroup.chromabreak": "Chroma Break",
   "block.chromabreak.example_block": "Example Block",
   "item.chromabreak.example_item": "Example Item",
   "chromabreak.configuration.title": "Chroma Break Configs",
@@ -9,5 +9,11 @@
   "chromabreak.configuration.logDirtBlock": "Log Dirt Block",
   "chromabreak.configuration.magicNumberIntroduction": "Magic Number Text",
   "chromabreak.configuration.magicNumber": "Magic Number",
-  "chromabreak.configuration.showEntityHealthBar": "Show Entity Health Bar"
+  "chromabreak.configuration.showEntityHealthBar": "Show Entity Health Bar",
+  // Crystal Shard Item (using texture tinting system)
+  "item.chromabreak.crystal_shard": "Crystal Shard",
+  // Crystal Block (using texture tinting system)
+  "block.chromabreak.crystal_block": "Crystal Block",
+  // Crystal Cluster (using texture tinting system)
+  "block.chromabreak.crystal_cluster": "Crystal Cluster"
 }

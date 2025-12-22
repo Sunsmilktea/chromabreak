@@ -1,8 +1,11 @@
 package com.github.chromabreak;
 
+import com.github.chromabreak.blocks.ModBlocks;
 import com.github.chromabreak.config.ConfigExampleGenerator;
 import com.github.chromabreak.config.EntityConfigLoader;
 import com.github.chromabreak.config.ModCompatibilityConfigLoader;
+import com.github.chromabreak.items.ModItems;
+import com.github.chromabreak.system.ModDataComponents;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -62,6 +65,12 @@ public class ChromaBreak {
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         // 注册模组的配置规范，以便FML可以为我们创建和加载配置文件
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
+        // 注册物品、方块和数据组件到模组事件总线
+        // Register items, blocks and data components to mod event bus
+        ModItems.ITEMS.register(modEventBus);
+        ModBlocks.BLOCKS.register(modEventBus);
+        ModDataComponents.COMPONENTS.register(modEventBus);
 
         // 注册模组事件总线监听器
         // Register mod event bus listener
