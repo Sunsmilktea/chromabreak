@@ -1,0 +1,13 @@
+{
+  "itemGroup.chromabreak": "示例模组标签页",
+  "block.chromabreak.example_block": "示例方块",
+  "item.chromabreak.example_item": "示例物品",
+  "chromabreak.configuration.title": "Chroma Break 配置",
+  "chromabreak.configuration.section.chromabreak.common.toml": "Chroma Break 配置",
+  "chromabreak.configuration.section.chromabreak.common.toml.title": "Chroma Break 配置",
+  "chromabreak.configuration.items": "物品列表",
+  "chromabreak.configuration.logDirtBlock": "记录泥土方块",
+  "chromabreak.configuration.magicNumberIntroduction": "魔法数字文本",
+  "chromabreak.configuration.magicNumber": "魔法数字",
+  "chromabreak.configuration.showEntityHealthBar": "显示生物血条"
+}

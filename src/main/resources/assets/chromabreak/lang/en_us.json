@@ -1,0 +1,13 @@
+{
+  "itemGroup.chromabreak": "Example Mod Tab",
+  "block.chromabreak.example_block": "Example Block",
+  "item.chromabreak.example_item": "Example Item",
+  "chromabreak.configuration.title": "Chroma Break Configs",
+  "chromabreak.configuration.section.chromabreak.common.toml": "Chroma Break Configs",
+  "chromabreak.configuration.section.chromabreak.common.toml.title": "Chroma Break Configs",
+  "chromabreak.configuration.items": "Item List",
+  "chromabreak.configuration.logDirtBlock": "Log Dirt Block",
+  "chromabreak.configuration.magicNumberIntroduction": "Magic Number Text",
+  "chromabreak.configuration.magicNumber": "Magic Number",
+  "chromabreak.configuration.showEntityHealthBar": "Show Entity Health Bar"
+}
