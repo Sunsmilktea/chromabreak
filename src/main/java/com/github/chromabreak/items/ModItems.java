@@ -13,10 +13,11 @@ import java.util.function.Supplier;
  * <p>
  * Mod Items Registration Class
  * <p>
- * 负责注册模组中的所有物品，使用Data Components系统支持7种颜色的水晶碎片
- * Responsible for registering all items in the mod, using Data Components system for 7 colors of crystal shards
+ * 负责注册模组中的所有物品，使用 Data Components 系统支持多种颜色的水晶碎片
+ * Responsible for registering all items in the mod, using Data Components system for multiple colors of crystal shards
  */
 public class ModItems {
+
     /**
      * 物品注册器
      * <p>
@@ -25,13 +26,13 @@ public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ChromaBreak.MODID);
 
     /**
-     * 水晶碎片物品（使用Data Components区分颜色变体）
+     * 水晶碎片物品（使用 Data Components 区分颜色变体）
      * <p>
      * Crystal shard item (uses Data Components to distinguish color variants)
      */
     public static final Supplier<Item> CRYSTAL_SHARD = ITEMS.register("crystal_shard",
             () -> new Item(new Item.Properties()
-                    .stacksTo(64)
-                    .component(ModDataComponents.CRYSTAL_COLOR.get(), CrystalColorVariant.WHITE)  // 默认白色
+                    .stacksTo(64)  // 最大堆叠64
+                    .component(ModDataComponents.CRYSTAL_COLOR.get(), CrystalColorVariant.WHITE) // 默认颜色：白色
             ));
 }
