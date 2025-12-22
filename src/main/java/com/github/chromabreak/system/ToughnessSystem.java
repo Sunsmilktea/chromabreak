@@ -11,18 +11,14 @@ import net.minecraft.world.entity.player.Player;
  * Toughness System Manager
  * Responsible for managing entity toughness values and related game mechanics
  */
-public class ToughnessSystem {
+public enum ToughnessSystem {
+    ;
 
     // 韧性值NBT标签键
     // Toughness NBT tag keys
     private static final String TOUGHNESS_TAG = "chromabreak_toughness";
     private static final String MAX_TOUGHNESS_TAG = "chromabreak_max_toughness";
     private static final String IS_TOUGHNESS_BROKEN_TAG = "chromabreak_toughness_broken";
-
-    // 私有构造器防止实例化
-    // Private constructor to prevent instantiation
-    private ToughnessSystem() {
-    }
 
     /**
      * 初始化实体的韧性系统

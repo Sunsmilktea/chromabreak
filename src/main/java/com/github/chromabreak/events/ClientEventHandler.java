@@ -19,12 +19,8 @@ import net.neoforged.neoforge.client.event.RenderGuiEvent;
  * Responsible for handling client rendering events, displaying health bar HUD
  */
 @EventBusSubscriber(modid = ChromaBreak.MODID, value = Dist.CLIENT)
-public class ClientEventHandler {
-
-    // 私有构造器防止实例化
-    // Private constructor to prevent instantiation
-    private ClientEventHandler() {
-    }
+public enum ClientEventHandler {
+    ;
 
     /**
      * 渲染GUI覆盖层事件处理方法
@@ -146,7 +142,8 @@ public class ClientEventHandler {
  * 性能优化相关变量
  * Performance optimization related variables
  */
-class PerformanceCache {
+enum PerformanceCache {
+    ;
     // 最大渲染距离（方块）
     // Maximum render distance (blocks)
     private static final double MAX_RENDER_DISTANCE = 20.0;
@@ -156,14 +153,9 @@ class PerformanceCache {
     private static boolean showHealthBarCached = true;
     private static float widthCached = 150.0f;
     private static float heightCached = 4.0f;
-    private static String foregroundColorCached = "#FF0000FF";
+    private static String foregroundColorCached = "#FFC0CB";
     private static float redOpacityCached = 0.9f;
     private static long lastConfigCheckTime;
-
-    // 私有构造器防止实例化
-    // Private constructor to prevent instantiation
-    private PerformanceCache() {
-    }
 
     /**
      * 检查是否应该渲染（基于距离）

@@ -16,14 +16,10 @@ import java.util.Set;
  * Weapon Color Helper Class
  * Handles color markers on weapons (stored in DataComponents)
  */
-public class WeaponColorHelper {
+public enum WeaponColorHelper {
+    ;
 
     private static final String COLORS_TAG = "chromabreak_weapon_colors";
-
-    // 私有构造器防止实例化
-    // Private constructor to prevent instantiation
-    private WeaponColorHelper() {
-    }
 
     /**
      * 检查武器是否有指定颜色

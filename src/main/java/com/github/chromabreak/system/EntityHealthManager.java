@@ -14,7 +14,8 @@ import java.util.Map;
  * Entity Health Manager
  * Responsible for managing custom entity health and toughness values via KubeJS
  */
-public class EntityHealthManager {
+public enum EntityHealthManager {
+    ;
 
     // 存储自定义最大生命值的映射
     // Map for storing custom maximum health values
@@ -27,11 +28,6 @@ public class EntityHealthManager {
     // 存储自定义韧性颜色分布的映射
     // Map for storing custom toughness color distributions
     private static final Map<String, ToughnessColorDistribution> CUSTOM_COLOR_DISTRIBUTION_MAP = new HashMap<>();
-
-    // 私有构造器防止实例化
-    // Private constructor to prevent instantiation
-    private EntityHealthManager() {
-    }
 
     /**
      * 设置生物的自定义最大生命值

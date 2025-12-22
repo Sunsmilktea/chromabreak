@@ -22,6 +22,14 @@ public class ToughnessColorDistribution {
     private final Map<ToughnessColor, Float> colorMap;
 
     /**
+     * 私有构造器
+     * Private constructor
+     */
+    private ToughnessColorDistribution() {
+        this.colorMap = new HashMap<>();
+    }
+
+    /**
      * 创建单一颜色的韧性分布
      * Create single color toughness distribution
      *
@@ -48,14 +56,6 @@ public class ToughnessColorDistribution {
         // Normalize percentages
         distribution.normalize();
         return distribution;
-    }
-
-    /**
-     * 私有构造器
-     * Private constructor
-     */
-    private ToughnessColorDistribution() {
-        this.colorMap = new HashMap<>();
     }
 
     /**

@@ -30,12 +30,8 @@ import java.util.List;
  * Responsible for handling entity-related events, such as toughness system initialization
  */
 @EventBusSubscriber(modid = ChromaBreak.MODID)
-public class EntityEventHandler {
-
-    // 私有构造器防止实例化
-    // Private constructor to prevent instantiation
-    private EntityEventHandler() {
-    }
+public enum EntityEventHandler {
+    ;
 
     // 帽子列表（按稀有度分组）
     // Hat list (grouped by rarity)
@@ -328,7 +324,7 @@ public class EntityEventHandler {
             return;
         }
 
-        // 检查是否是剪刀（原版剥离盔甲的方式）
+        // 检查是否是剪刀
         // Check if it's shears (vanilla way to strip armor)
         if (heldItem.is(Items.SHEARS)) {
             // 阻止交互
@@ -469,13 +465,9 @@ public class EntityEventHandler {
      * 帽子配置类
      * Hat configuration class
      */
-    private static class HatConfig {
-        final ResourceLocation itemId;
-        final HatRarity rarity;
-
-        HatConfig(final String itemId, final HatRarity rarity) {
-            this.itemId = ResourceLocation.parse(itemId);
-            this.rarity = rarity;
+    private record HatConfig(ResourceLocation itemId, HatRarity rarity) {
+        private HatConfig(final String itemId, final HatRarity rarity) {
+            this(ResourceLocation.parse(itemId), rarity);
         }
     }
 }

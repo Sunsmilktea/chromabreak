@@ -74,6 +74,26 @@ public enum ToughnessColor {
     }
 
     /**
+     * 根据名称获取颜色
+     * Get color by name
+     *
+     * @param name 颜色名称（不区分大小写）
+     * @return 颜色枚举，如果未找到则返回WHITE
+     */
+    public static ToughnessColor byName(final String name) {
+        if (null == name || name.isEmpty()) {
+            return ToughnessColor.WHITE;
+        }
+
+        final String upperName = name.toUpperCase();
+        try {
+            return ToughnessColor.valueOf(upperName);
+        } catch (final IllegalArgumentException e) {
+            return ToughnessColor.WHITE;
+        }
+    }
+
+    /**
      * 获取颜色的RGB值
      * Get color RGB value
      *
@@ -93,26 +113,6 @@ public enum ToughnessColor {
     public int getArgb(final float alpha) {
         final int a = (int) (alpha * 255.0f) & 0xFF;
         return (a << 24) | (this.rgb & 0x00FFFFFF);
-    }
-
-    /**
-     * 根据名称获取颜色
-     * Get color by name
-     *
-     * @param name 颜色名称（不区分大小写）
-     * @return 颜色枚举，如果未找到则返回WHITE
-     */
-    public static ToughnessColor byName(final String name) {
-        if (null == name || name.isEmpty()) {
-            return ToughnessColor.WHITE;
-        }
-
-        final String upperName = name.toUpperCase();
-        try {
-            return ToughnessColor.valueOf(upperName);
-        } catch (final IllegalArgumentException e) {
-            return ToughnessColor.WHITE;
-        }
     }
 
     /**

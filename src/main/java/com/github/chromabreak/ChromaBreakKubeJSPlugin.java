@@ -388,45 +388,28 @@ public class ChromaBreakKubeJSPlugin implements KubeJSPlugin {
                 return;
             }
 
+            int successCount = 0;
+            int failCount = 0;
+
             for (final Object configObj : entityConfigs) {
                 try {
                     if (configObj instanceof final Map<?, ?> config) {
-                        final String entityType = config.get("entityType").toString();
-
-                        if (config.containsKey("maxHealth")) {
-                            final float maxHealth = Float.parseFloat(config.get("maxHealth").toString());
-                            this.setEntityMaxHealth(entityType, maxHealth);
+                        if (com.github.chromabreak.config.EntityConfigProcessor.processEntityConfigFromMap(config)) {
+                            successCount++;
+                        } else {
+                            failCount++;
                         }
-
-                        if (config.containsKey("toughness")) {
-                            final float toughness = Float.parseFloat(config.get("toughness").toString());
-                            this.setEntityToughness(entityType, toughness);
-                        }
-
-                        // 支持单一颜色设置
-                        // Support single color setting
-                        if (config.containsKey("toughnessColor")) {
-                            final String colorName = config.get("toughnessColor").toString();
-                            this.setEntityToughnessColor(entityType, colorName);
-                        }
-
-                        // 支持多色百分比分布设置
-                        // Support multi-color percentage distribution setting
-                        if (config.containsKey("toughnessColors")) {
-                            final Object colorsObj = config.get("toughnessColors");
-                            if (colorsObj instanceof final Map<?, ?> colorsMap) {
-                                final Map<String, Object> colorMap = new java.util.HashMap<>();
-                                for (final Map.Entry<?, ?> entry : colorsMap.entrySet()) {
-                                    colorMap.put(entry.getKey().toString(), entry.getValue());
-                                }
-                                this.setEntityToughnessColorDistribution(entityType, colorMap);
-                            }
-                        }
+                    } else {
+                        ChromaBreakKubeJSPlugin.LOGGER.warn("Invalid entity config object type: {}", configObj.getClass().getName());
+                        failCount++;
                     }
                 } catch (final Exception e) {
                     ChromaBreakKubeJSPlugin.LOGGER.error("Error processing entity config: {}", e.getMessage());
+                    failCount++;
                 }
             }
+
+            ChromaBreakKubeJSPlugin.LOGGER.info("Entity configuration processing completed: {} succeeded, {} failed", successCount, failCount);
         }
 
         /**
@@ -515,7 +498,7 @@ public class ChromaBreakKubeJSPlugin implements KubeJSPlugin {
                 return false;
             }
             try {
-                if (itemStack instanceof net.minecraft.world.item.ItemStack stack) {
+                if (itemStack instanceof final net.minecraft.world.item.ItemStack stack) {
                     final com.github.chromabreak.system.ToughnessColor color = com.github.chromabreak.system.ToughnessColor.byName(colorName);
                     if (null == color) {
                         ChromaBreakKubeJSPlugin.LOGGER.warn("Invalid color name: {}", colorName);
@@ -542,7 +525,7 @@ public class ChromaBreakKubeJSPlugin implements KubeJSPlugin {
                 return false;
             }
             try {
-                if (itemStack instanceof net.minecraft.world.item.ItemStack stack) {
+                if (itemStack instanceof final net.minecraft.world.item.ItemStack stack) {
                     final com.github.chromabreak.system.ToughnessColor color = com.github.chromabreak.system.ToughnessColor.byName(colorName);
                     if (null == color) {
                         return false;
@@ -567,7 +550,7 @@ public class ChromaBreakKubeJSPlugin implements KubeJSPlugin {
                 return false;
             }
             try {
-                if (itemStack instanceof net.minecraft.world.item.ItemStack stack) {
+                if (itemStack instanceof final net.minecraft.world.item.ItemStack stack) {
                     return com.github.chromabreak.system.WeaponHelper.isWeapon(stack);
                 }
             } catch (final Exception e) {
@@ -588,7 +571,7 @@ public class ChromaBreakKubeJSPlugin implements KubeJSPlugin {
                 return false;
             }
             try {
-                if (itemStack instanceof net.minecraft.world.item.ItemStack stack) {
+                if (itemStack instanceof final net.minecraft.world.item.ItemStack stack) {
                     return com.github.chromabreak.system.DyeColorMapper.isValidDye(stack.getItem());
                 }
             } catch (final Exception e) {
@@ -609,7 +592,7 @@ public class ChromaBreakKubeJSPlugin implements KubeJSPlugin {
                 return null;
             }
             try {
-                if (itemStack instanceof net.minecraft.world.item.ItemStack stack) {
+                if (itemStack instanceof final net.minecraft.world.item.ItemStack stack) {
                     final com.github.chromabreak.system.ToughnessColor color = com.github.chromabreak.system.DyeColorMapper.getColorFromDye(stack.getItem());
                     return null == color ? null : color.getName();
                 }

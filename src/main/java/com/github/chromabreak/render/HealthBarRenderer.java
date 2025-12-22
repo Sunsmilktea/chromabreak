@@ -1,5 +1,6 @@
 package com.github.chromabreak.render;
 
+import com.github.chromabreak.system.ToughnessColor;
 import net.minecraft.client.gui.GuiGraphics;
 
 import java.awt.*;
@@ -11,12 +12,8 @@ import java.awt.*;
  * Health Bar Renderer Class
  * Responsible for rendering health bars on HUD for entities
  */
-public class HealthBarRenderer {
-
-    // 私有构造器防止实例化
-    // Private constructor to prevent instantiation
-    private HealthBarRenderer() {
-    }
+public enum HealthBarRenderer {
+    ;
 
     /**
      * 在HUD上渲染血条和韧性条（屏幕坐标）
@@ -134,6 +131,68 @@ public class HealthBarRenderer {
     }
 
     /**
+     * 渲染颜色渐变过渡
+     * Render color gradient transition
+     *
+     * @param guiGraphics   GUI图形上下文
+     * @param startColor    起始颜色
+     * @param endColor      结束颜色
+     * @param startX        起始X坐标
+     * @param endX          结束X坐标
+     * @param y             Y坐标
+     * @param height        高度
+     * @param gradientWidth 渐变宽度
+     */
+    private static void renderGradientTransition(final GuiGraphics guiGraphics,
+                                                 final com.github.chromabreak.system.ToughnessColor startColor,
+                                                 final com.github.chromabreak.system.ToughnessColor endColor,
+                                                 final float startX, final float endX,
+                                                 final float y, final float height, final float gradientWidth) {
+        final int startArgb = startColor.getArgb(1.0f);
+        final int endArgb = endColor.getArgb(1.0f);
+
+        // 提取起始和结束颜色的RGBA分量
+        // Extract RGBA components from start and end colors
+        final int startAlpha = (startArgb >> 24) & 0xFF;
+        final int startRed = (startArgb >> 16) & 0xFF;
+        final int startGreen = (startArgb >> 8) & 0xFF;
+        final int startBlue = startArgb & 0xFF;
+
+        final int endAlpha = (endArgb >> 24) & 0xFF;
+        final int endRed = (endArgb >> 16) & 0xFF;
+        final int endGreen = (endArgb >> 8) & 0xFF;
+        final int endBlue = endArgb & 0xFF;
+
+        // 计算渐变步数（每像素一个步长）
+        // Calculate gradient steps (one step per pixel)
+        final int gradientSteps = Math.max(1, (int) (endX - startX));
+
+        // 逐像素渲染渐变
+        // Render gradient pixel by pixel
+        for (int i = 0; i < gradientSteps; i++) {
+            final float progress = (float) i / (float) gradientSteps;
+
+            // 线性插值计算当前像素的颜色
+            // Linear interpolation to calculate current pixel color
+            final int currentAlpha = (int) (startAlpha + (endAlpha - startAlpha) * progress);
+            final int currentRed = (int) (startRed + (endRed - startRed) * progress);
+            final int currentGreen = (int) (startGreen + (endGreen - startGreen) * progress);
+            final int currentBlue = (int) (startBlue + (endBlue - startBlue) * progress);
+
+            final int currentColor = (currentAlpha << 24) | (currentRed << 16) | (currentGreen << 8) | currentBlue;
+
+            // 渲染当前像素
+            // Render current pixel
+            final int pixelX = (int) (startX + i);
+            guiGraphics.fill(
+                    pixelX, (int) y,
+                    pixelX + 1, (int) (y + height),
+                    currentColor
+            );
+        }
+    }
+
+    /**
      * 解析十六进制颜色字符串为RGBA浮点值
      * Parse hex color string to RGBA float values
      */
@@ -179,7 +238,6 @@ public class HealthBarRenderer {
             return new float[]{1.0f, 0.0f, 0.0f, 1.0f};
         }
     }
-
 
     /**
      * 渲染彩色韧性条（带颜色分布）
@@ -242,8 +300,8 @@ public class HealthBarRenderer {
             return;
         }
 
-        // 多色分布：按百分比分段渲染
-        // Multi-color distribution: render segments by percentage
+        // 多色分布：按百分比分段渲染，使用渐变过渡
+        // Multi-color distribution: render segments with gradient transitions
         // 对颜色进行排序以确保渲染顺序一致
         // Sort colors to ensure consistent rendering order
         final java.util.List<java.util.Map.Entry<com.github.chromabreak.system.ToughnessColor, Float>> sortedEntries =
@@ -254,6 +312,9 @@ public class HealthBarRenderer {
         final float totalWidth = width; // 保存总宽度
         float totalPercentage = 0.0f; // 用于验证百分比总和
 
+        // 计算每个颜色段的起始和结束位置
+        // Calculate start and end positions for each color segment
+        final java.util.List<ColorSegment> segments = new java.util.ArrayList<>();
         for (final java.util.Map.Entry<com.github.chromabreak.system.ToughnessColor, Float> entry : sortedEntries) {
             final com.github.chromabreak.system.ToughnessColor color = entry.getKey();
             final float percentage = entry.getValue();
@@ -261,32 +322,80 @@ public class HealthBarRenderer {
             final float segmentWidth = totalWidth * percentage;
 
             if (0.01f < segmentWidth) {
-                // 使用不透明的ARGB颜色值
-                // Use opaque ARGB color value
-                final int argb = color.getArgb(1.0f);
-                final int endX = (int) (currentX + segmentWidth);
-                guiGraphics.fill(
-                        (int) currentX, (int) y,
-                        endX, (int) (y + height),
-                        argb
-                );
-                currentX += segmentWidth;
+                final float segmentStart = currentX;
+                final float segmentEnd = currentX + segmentWidth;
+                segments.add(new ColorSegment(color, segmentStart, segmentEnd));
+                currentX = segmentEnd;
             }
         }
 
-        // 如果还有剩余空间（由于浮点数精度问题），用最后一个颜色填充
-        // If there's remaining space (due to floating point precision), fill with last color
+        // 如果还有剩余空间（由于浮点数精度问题），添加最后一个颜色段
+        // If there's remaining space (due to floating point precision), add last color segment
         if (currentX < x + totalWidth - 0.5f) {
             final float remainingWidth = (x + totalWidth) - currentX;
             if (0.5f < remainingWidth && !sortedEntries.isEmpty()) {
                 final com.github.chromabreak.system.ToughnessColor lastColor = sortedEntries.get(sortedEntries.size() - 1).getKey();
-                final int argb = lastColor.getArgb(1.0f);
-                guiGraphics.fill(
-                        (int) currentX, (int) y,
-                        (int) (x + totalWidth), (int) (y + height),
-                        argb
-                );
+                segments.add(new ColorSegment(lastColor, currentX, x + totalWidth));
             }
         }
+
+        // 渲染渐变韧性条
+        // Render gradient toughness bar
+        if (1 == segments.size()) {
+            // 单一颜色：直接渲染
+            // Single color: render directly
+            final ColorSegment segment = segments.get(0);
+            final int argb = segment.color.getArgb(1.0f);
+            guiGraphics.fill(
+                    (int) segment.start, (int) y,
+                    (int) segment.end, (int) (y + height),
+                    argb
+            );
+        } else if (1 < segments.size()) {
+            // 多色：使用渐变渲染
+            // Multiple colors: use gradient rendering
+
+            // 计算渐变过渡区域宽度（总宽度的5%或10像素，取较小值）
+            // Calculate gradient transition width (5% of total width or 10 pixels, whichever is smaller)
+            final float gradientWidth = Math.min(totalWidth * 0.05f, 10.0f);
+
+            // 逐段渲染，在段之间添加渐变过渡
+            // Render segment by segment, adding gradient transitions between segments
+            for (int i = 0; i < segments.size(); i++) {
+                final ColorSegment currentSegment = segments.get(i);
+
+                // 渲染当前颜色段的主体部分（减去渐变区域）
+                // Render main part of current color segment (minus gradient area)
+                final float mainSegmentEnd = (i < segments.size() - 1) ?
+                        currentSegment.end - gradientWidth / 2 : currentSegment.end;
+
+                if (currentSegment.start < mainSegmentEnd) {
+                    final int argb = currentSegment.color.getArgb(1.0f);
+                    guiGraphics.fill(
+                            (int) currentSegment.start, (int) y,
+                            (int) mainSegmentEnd, (int) (y + height),
+                            argb
+                    );
+                }
+
+                // 渲染到下一个颜色段的渐变过渡
+                // Render gradient transition to next color segment
+                if (i < segments.size() - 1) {
+                    final ColorSegment nextSegment = segments.get(i + 1);
+                    HealthBarRenderer.renderGradientTransition(guiGraphics,
+                            currentSegment.color, nextSegment.color,
+                            currentSegment.end - gradientWidth / 2,
+                            currentSegment.end + gradientWidth / 2,
+                            y, height, gradientWidth);
+                }
+            }
+        }
+    }
+
+    /**
+     * 颜色段信息类
+     * Color segment information class
+     */
+    private record ColorSegment(ToughnessColor color, float start, float end) {
     }
 }

@@ -15,7 +15,8 @@ import java.util.Set;
  * Mod Compatibility Manager
  * Manages which damage types and mods can bypass the toughness system
  */
-public class ModCompatibilityManager {
+public enum ModCompatibilityManager {
+    ;
 
     // 存储可以绕过韧性的伤害类型
     // Set of damage types that can bypass toughness
@@ -32,11 +33,6 @@ public class ModCompatibilityManager {
     // 已知的直接造成血量伤害的物品ID模式（从配置文件加载）
     // Known item ID patterns that deal direct health damage (loaded from config file)
     private static final Set<String> DIRECT_DAMAGE_ITEM_PATTERNS = new HashSet<>();
-
-    // 私有构造器防止实例化
-    // Private constructor to prevent instantiation
-    private ModCompatibilityManager() {
-    }
 
     /**
      * 检查伤害源是否可以绕过韧性
@@ -131,9 +127,7 @@ public class ModCompatibilityManager {
             }
             // 检查是否为已知的直接伤害模组
             // Check if it's a known direct damage mod
-            if (null != modId && ModCompatibilityManager.DIRECT_DAMAGE_MOD_IDS.contains(modId)) {
-                return true;
-            }
+            return null != modId && ModCompatibilityManager.DIRECT_DAMAGE_MOD_IDS.contains(modId);
         }
 
         return false;
@@ -178,14 +172,10 @@ public class ModCompatibilityManager {
         // 检查伤害源消息ID（可能包含子弹、投射物等信息）
         // Check damage source message ID (may contain bullet, projectile, etc. information)
         final String msgId = source.getMsgId().toLowerCase();
-        if (msgId.contains("bullet") ||
+        return msgId.contains("bullet") ||
                 msgId.contains("projectile") ||
                 msgId.contains("ammo") ||
-                msgId.contains("shot")) {
-            return true;
-        }
-
-        return false;
+                msgId.contains("shot");
     }
 
     /**
@@ -229,9 +219,7 @@ public class ModCompatibilityManager {
             final ItemStack mainHandItem = livingEntity.getMainHandItem();
             if (!mainHandItem.isEmpty()) {
                 final String modId = ModCompatibilityManager.getModIdFromItem(mainHandItem);
-                if (null != modId) {
-                    return modId;
-                }
+                return modId;
             }
         }
 

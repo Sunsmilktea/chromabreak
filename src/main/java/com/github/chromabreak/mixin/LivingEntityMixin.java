@@ -277,7 +277,7 @@ public class LivingEntityMixin {
         if (attacker instanceof final net.minecraft.world.entity.player.Player player) {
             // Check if player is falling (jump attack = critical hit)
             // 检查玩家是否在下落（跳劈 = 暴击）
-            if (player.fallDistance > 0.0f && !player.onGround() && !player.isInWater() && !player.isPassenger()) {
+            if (0.0f < player.fallDistance && !player.onGround() && !player.isInWater() && !player.isPassenger()) {
                 return true;
             }
         }

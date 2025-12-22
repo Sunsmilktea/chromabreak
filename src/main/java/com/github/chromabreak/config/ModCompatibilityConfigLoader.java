@@ -14,9 +14,10 @@ import java.util.List;
  * Mod Compatibility Configuration Loader
  * Load mod compatibility settings from config file and apply to ModCompatibilityManager
  */
-public class ModCompatibilityConfigLoader {
+public enum ModCompatibilityConfigLoader {
+    ;
     private static final Logger LOGGER = LoggerFactory.getLogger("ModCompatibilityConfigLoader");
-    private static boolean loaded = false;
+    private static boolean loaded;
 
     /**
      * 从配置文件加载模组兼容性配置
@@ -37,7 +38,7 @@ public class ModCompatibilityConfigLoader {
 
             // 加载绕过模组ID列表
             // Load bypass mod IDs list
-            @SuppressWarnings("unchecked") final List<String> bypassModIds = (List<String>) (List<?>) Config.BYPASS_MOD_IDS.get();
+            @SuppressWarnings("unchecked") final List<String> bypassModIds = (List<String>) Config.BYPASS_MOD_IDS.get();
             if (null != bypassModIds && !bypassModIds.isEmpty()) {
                 for (final String modId : bypassModIds) {
                     if (null != modId && !modId.trim().isEmpty()) {
@@ -51,7 +52,7 @@ public class ModCompatibilityConfigLoader {
 
             // 加载绕过物品ID模式列表
             // Load bypass item ID patterns list
-            @SuppressWarnings("unchecked") final List<String> bypassItemPatterns = (List<String>) (List<?>) Config.BYPASS_ITEM_PATTERNS.get();
+            @SuppressWarnings("unchecked") final List<String> bypassItemPatterns = (List<String>) Config.BYPASS_ITEM_PATTERNS.get();
             if (null != bypassItemPatterns && !bypassItemPatterns.isEmpty()) {
                 for (final String pattern : bypassItemPatterns) {
                     if (null != pattern && !pattern.trim().isEmpty()) {

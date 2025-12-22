@@ -1,6 +1,5 @@
 package com.github.chromabreak.system;
 
-import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
@@ -14,7 +13,8 @@ import java.util.Map;
  * Dye Color Mapper
  * Maps Minecraft dyes to toughness colors
  */
-public class DyeColorMapper {
+public enum DyeColorMapper {
+    ;
     private static final Map<Item, ToughnessColor> DYE_TO_COLOR_MAP = new HashMap<>();
 
     static {
@@ -47,10 +47,6 @@ public class DyeColorMapper {
         // 橙色染料 -> 橙色韧性条
         // Orange Dye -> Orange Toughness Bar
         DyeColorMapper.DYE_TO_COLOR_MAP.put(Items.ORANGE_DYE, ToughnessColor.ORANGE);
-    }
-
-    private DyeColorMapper() {
-        // Private constructor to prevent instantiation
     }
 
     /**

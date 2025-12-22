@@ -8,11 +8,8 @@ import net.minecraft.world.item.Items;
  * 武器辅助类
  * 判断物品是否是武器
  */
-public class WeaponHelper {
-
-    private WeaponHelper() {
-        // Private constructor to prevent instantiation
-    }
+public enum WeaponHelper {
+    ;
 
     /**
      * 检查物品是否是武器
@@ -24,7 +21,7 @@ public class WeaponHelper {
         if (itemStack.isEmpty()) {
             return false;
         }
-        return isWeapon(itemStack.getItem());
+        return WeaponHelper.isWeapon(itemStack.getItem());
     }
 
     /**
@@ -34,7 +31,7 @@ public class WeaponHelper {
      * @return 是否是武器
      */
     public static boolean isWeapon(final Item item) {
-        if (item == null) {
+        if (null == item) {
             return false;
         }
 

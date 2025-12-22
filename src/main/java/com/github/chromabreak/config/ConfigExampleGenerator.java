@@ -15,7 +15,8 @@ import java.nio.file.StandardOpenOption;
  * Configuration Example File Generator
  * Automatically generates chromabreak-common.toml.example file
  */
-public class ConfigExampleGenerator {
+public enum ConfigExampleGenerator {
+    ;
     private static final String EXAMPLE_FILE_NAME = "chromabreak-common.toml.example";
 
     /**

@@ -2,6 +2,10 @@ package com.github.chromabreak;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * ChromaBreak模组配置类
  * <p>
@@ -11,7 +15,8 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  * <p>
  * Health Bar HUD Configuration Class
  */
-public class Config {
+public enum Config {
+    ;
 
     /**
      * 配置构建器，用于构建配置规范
@@ -74,14 +79,14 @@ public class Config {
     // ===== Health Bar Appearance Configuration =====
     /**
      * 血条前景颜色配置
-     * 字符串配置选项，默认值为"#FF0000FF"（大红色）
+     * 字符串配置选项，默认值为"#FFFF6EC7"（粉色）
      * <p>
      * Health bar foreground (filled) color configuration
-     * String configuration option with default value "#FF0000FF" (bright red)
+     * String configuration option with default value "#FFFF6EC7" (pink)
      */
     public static final ModConfigSpec.ConfigValue<String> HEALTH_BAR_FOREGROUND_COLOR = Config.BUILDER
-            .comment("Health bar foreground (filled) color in hex format (e.g., #FF0000FF for bright red)\n血条前景（填充）颜色配置（十六进制格式，例如：#FF0000FF表示大红色）")
-            .define("healthBarForegroundColor", "#FF0000FF");
+            .comment("Health bar foreground (filled) color in hex format (e.g., #FFC0CB for pink)\n血条前景（填充）颜色配置（十六进制格式，例如：#FFC0CB表示粉色）")
+            .define("healthBarForegroundColor", "#FFC0CB");
     /**
      * 血条圆角半径配置
      * 双精度浮点数配置选项，默认值为2.0，范围从0.0到10.0
@@ -136,7 +141,7 @@ public class Config {
      * {"entityType":"minecraft:spider","maxHealth":20.0,"maxToughness":80.0,"toughnessColors":{"orange":0.4,"yellow":0.3,"green":0.2,"white":0.1}}
      */
     @SuppressWarnings("unchecked")
-    public static final ModConfigSpec.ConfigValue<java.util.List<? extends String>> ENTITY_CONFIGS = Config.BUILDER
+    public static final ModConfigSpec.ConfigValue<List<?>> ENTITY_CONFIGS = Config.BUILDER
             .comment(
                     "Entity configuration list (JSON format).\n",
                     "实体配置列表（JSON格式）\n",
@@ -145,7 +150,7 @@ public class Config {
                     "Available colors (7 types, one-to-one with Minecraft dyes): red, blue, green, yellow, white, black, orange\n",
                     "可用颜色（7种，与Minecraft染料一一对应）：red, blue, green, yellow, white, black, orange"
             )
-            .defineList("entityConfigs", java.util.Collections.<String>emptyList(), obj -> obj instanceof String);
+            .defineList("entityConfigs", Collections.emptyList(), obj -> obj instanceof String);
 
     // ===== 模组兼容性配置 =====
     // ===== Mod Compatibility Configuration =====
@@ -157,7 +162,7 @@ public class Config {
      * Damage from these mods will deal direct health damage, bypassing the toughness system
      */
     @SuppressWarnings("unchecked")
-    public static final ModConfigSpec.ConfigValue<java.util.List<? extends String>> BYPASS_MOD_IDS = Config.BUILDER
+    public static final ModConfigSpec.ConfigValue<List<? extends String>> BYPASS_MOD_IDS = Config.BUILDER
             .comment(
                     "List of mod IDs that can bypass the toughness system.\n",
                     "Damage from these mods will deal direct health damage, bypassing the toughness system.\n",
@@ -166,7 +171,7 @@ public class Config {
                     "这些模组的伤害会直接造成血量伤害，不经过韧性系统。\n",
                     "示例：cgm, avaritia, techguns, mekanism"
             )
-            .defineList("bypassModIds", java.util.Arrays.asList("cgm", "combatguns", "guns", "avaritia", "mekanism", "techguns", "immersiveengineering"), obj -> obj instanceof String);
+            .defineList("bypassModIds", Arrays.asList("cgm", "combatguns", "guns", "avaritia", "mekanism", "techguns", "immersiveengineering"), obj -> obj instanceof String);
 
     /**
      * 可以绕过韧性系统的物品ID模式列表
@@ -176,7 +181,7 @@ public class Config {
      * Damage from items matching these patterns will deal direct health damage, bypassing the toughness system
      */
     @SuppressWarnings("unchecked")
-    public static final ModConfigSpec.ConfigValue<java.util.List<? extends String>> BYPASS_ITEM_PATTERNS = Config.BUILDER
+    public static final ModConfigSpec.ConfigValue<List<? extends String>> BYPASS_ITEM_PATTERNS = Config.BUILDER
             .comment(
                     "List of item ID patterns that can bypass the toughness system.\n",
                     "Damage from items matching these patterns will deal direct health damage, bypassing the toughness system.\n",
@@ -187,7 +192,7 @@ public class Config {
                     "模式使用 startsWith 匹配，所以 'avaritia:infinity' 会匹配所有以 'avaritia:infinity' 开头的物品。\n",
                     "示例：avaritia:infinity, cgm:, techguns:"
             )
-            .defineList("bypassItemPatterns", java.util.Arrays.asList("avaritia:infinity", "cgm:", "combatguns:", "guns:", "techguns:"), obj -> obj instanceof String);
+            .defineList("bypassItemPatterns", Arrays.asList("avaritia:infinity", "cgm:", "combatguns:", "guns:", "techguns:"), obj -> obj instanceof String);
 
     // ===== 韧性削减配置 =====
     // ===== Toughness Reduction Configuration =====
@@ -236,8 +241,4 @@ public class Config {
      */
     static final ModConfigSpec SPEC = Config.BUILDER.build();
 
-    // 私有构造器防止实例化
-    // Private constructor to prevent instantiation
-    private Config() {
-    }
 }
