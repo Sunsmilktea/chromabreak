@@ -5,7 +5,6 @@ import com.github.chromabreak.config.ConfigExampleGenerator;
 import com.github.chromabreak.config.EntityConfigLoader;
 import com.github.chromabreak.config.ModCompatibilityConfigLoader;
 import com.github.chromabreak.items.ModItems;
-import com.github.chromabreak.system.ModDataComponents;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -25,11 +24,13 @@ import org.slf4j.Logger;
  * 具体的功能实现已经分离到专门的包和类中：
  * - events包：处理各种事件监听
  * - config包：处理配置相关功能
+ * - blocks包：处理方块相关功能
  * <p>
  * This is the main entry point of the mod, responsible for mod initialization and core configuration.
  * Specific functionality implementations have been separated into dedicated packages and classes:
  * - events package: handles various event listeners
  * - config package: handles configuration-related functionality
+ * - blocks package: handles block-related functionality
  */
 @Mod(ChromaBreak.MODID)
 public class ChromaBreak {
@@ -70,7 +71,6 @@ public class ChromaBreak {
         // Register items, blocks and data components to mod event bus
         ModItems.ITEMS.register(modEventBus);
         ModBlocks.BLOCKS.register(modEventBus);
-        ModDataComponents.COMPONENTS.register(modEventBus);
 
         // 注册模组事件总线监听器
         // Register mod event bus listener

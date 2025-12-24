@@ -1,19 +1,26 @@
 {
   "itemGroup.chromabreak": "Chroma Break",
-  "block.chromabreak.example_block": "Example Block",
-  "item.chromabreak.example_item": "Example Item",
-  "chromabreak.configuration.title": "Chroma Break Configs",
-  "chromabreak.configuration.section.chromabreak.common.toml": "Chroma Break Configs",
-  "chromabreak.configuration.section.chromabreak.common.toml.title": "Chroma Break Configs",
-  "chromabreak.configuration.items": "Item List",
-  "chromabreak.configuration.logDirtBlock": "Log Dirt Block",
-  "chromabreak.configuration.magicNumberIntroduction": "Magic Number Text",
-  "chromabreak.configuration.magicNumber": "Magic Number",
   "chromabreak.configuration.showEntityHealthBar": "Show Entity Health Bar",
-  // Crystal Shard Item (using texture tinting system)
-  "item.chromabreak.crystal_shard": "Crystal Shard",
-  // Crystal Block (using texture tinting system)
+  "item.chromabreak.black_crystal_shard": "Black Crystal Shard",
+  "item.chromabreak.white_crystal_shard": "White Crystal Shard",
+  "item.chromabreak.yellow_crystal_shard": "Yellow Crystal Shard",
+  "item.chromabreak.green_crystal_shard": "Green Crystal Shard",
+  "item.chromabreak.blue_crystal_shard": "Blue Crystal Shard",
+  "item.chromabreak.orange_crystal_shard": "Orange Crystal Shard",
+  "item.chromabreak.red_crystal_shard": "Red Crystal Shard",
+  "block.chromabreak.small_crystals_black_bud": "Black Crystal Bud",
+  "block.chromabreak.small_crystals_white_bud": "White Crystal Bud",
+  "block.chromabreak.small_crystals_yellow_bud": "Yellow Crystal Bud",
+  "block.chromabreak.small_crystals_green_bud": "Green Crystal Bud",
+  "block.chromabreak.small_crystals_blue_bud": "Blue Crystal Bud",
+  "block.chromabreak.small_crystals_orange_bud": "Orange Crystal Bud",
+  "block.chromabreak.small_crystals_red_bud": "Red Crystal Bud",
+  "block.chromabreak.medium_crystals_orange_bud": "Medium Orange Crystal Bud",
+  "block.chromabreak.large_crystals_orange_bud": "Large Orange Crystal Bud",
+  "block.chromabreak.budding_orange_crystals": "Budding Orange Crystals",
+  "block.chromabreak.crystals_orange_cluster": "Orange Crystal Cluster",
+  "block.chromabreak.crystals_orange_block": "Orange Crystal Block",
+
   "block.chromabreak.crystal_block": "Crystal Block",
-  // Crystal Cluster (using texture tinting system)
   "block.chromabreak.crystal_cluster": "Crystal Cluster"
 }

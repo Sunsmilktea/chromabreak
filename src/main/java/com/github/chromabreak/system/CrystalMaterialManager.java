@@ -11,7 +11,8 @@ import net.minecraft.resources.ResourceLocation;
  * 负责管理7种颜色水晶的材质资源路径
  * Responsible for managing texture resource paths for 7 colors of crystals
  */
-public class CrystalMaterialManager {
+public enum CrystalMaterialManager {
+    ;
 
     /**
      * 获取水晶碎片物品的材质路径
@@ -21,7 +22,7 @@ public class CrystalMaterialManager {
      * @param color 颜色名称
      * @return 材质资源路径
      */
-    public static ResourceLocation getCrystalShardTexture(String color) {
+    public static ResourceLocation getCrystalShardTexture(final String color) {
         return ResourceLocation.fromNamespaceAndPath(ChromaBreak.MODID, "item/" + color + "_crystal_shard");
     }
 
@@ -33,7 +34,7 @@ public class CrystalMaterialManager {
      * @param color 颜色名称
      * @return 材质资源路径
      */
-    public static ResourceLocation getCrystalBlockTexture(String color) {
+    public static ResourceLocation getCrystalBlockTexture(final String color) {
         return ResourceLocation.fromNamespaceAndPath(ChromaBreak.MODID, "block/" + color + "_crystal_block");
     }
 
@@ -45,7 +46,7 @@ public class CrystalMaterialManager {
      * @param color 颜色名称
      * @return 材质资源路径
      */
-    public static ResourceLocation getCrystalClusterTexture(String color) {
+    public static ResourceLocation getCrystalClusterTexture(final String color) {
         return ResourceLocation.fromNamespaceAndPath(ChromaBreak.MODID, "block/" + color + "_crystal_cluster");
     }
 
@@ -68,8 +69,8 @@ public class CrystalMaterialManager {
      * @param color 颜色名称
      * @return 是否有效
      */
-    public static boolean isValidColor(String color) {
-        for (String validColor : getCrystalColors()) {
+    public static boolean isValidColor(final String color) {
+        for (final String validColor : CrystalMaterialManager.getCrystalColors()) {
             if (validColor.equals(color)) {
                 return true;
             }

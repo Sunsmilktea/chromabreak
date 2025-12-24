@@ -1,12 +1,9 @@
 package com.github.chromabreak.blocks;
 
 import com.github.chromabreak.ChromaBreak;
-import com.github.chromabreak.system.CrystalColorVariant;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -16,10 +13,12 @@ import java.util.function.Supplier;
  * <p>
  * Mod Blocks Registration Class
  * <p>
- * 负责注册模组中的所有方块，使用纹理着色系统支持7种颜色的水晶方块
- * Responsible for registering all blocks in the mod, using texture tinting system for 7 colors of crystal blocks
+ * 负责注册模组中的所有方块
+ * Responsible for registering all blocks in the mod
  */
-public class ModBlocks {
+public enum ModBlocks {
+    ;
+
     /**
      * 方块注册器
      * <p>
@@ -28,29 +27,59 @@ public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(ChromaBreak.MODID);
 
     /**
-     * 颜色属性，用于方块状态
+     * 水晶芽方块（7种颜色变体）
      * <p>
-     * Color property for block states
+     * Crystal bud blocks (7 color variants)
+     * 这些方块在创造模式标签栏不可见，类似紫水晶芽
+     * These blocks are not visible in creative mode tab, similar to amethyst buds
      */
-    public static final EnumProperty<CrystalColorVariant> COLOR = EnumProperty.create("color", CrystalColorVariant.class);
+    public static final Supplier<Block> SMALL_CRYSTALS_BLACK_BUD = ModBlocks.BLOCKS.register("small_crystals_black_bud",
+            () -> new CustomSmallBudBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SMALL_AMETHYST_BUD)));
+
+    public static final Supplier<Block> SMALL_CRYSTALS_WHITE_BUD = ModBlocks.BLOCKS.register("small_crystals_white_bud",
+            () -> new CustomSmallBudBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SMALL_AMETHYST_BUD)));
+
+    public static final Supplier<Block> SMALL_CRYSTALS_YELLOW_BUD = ModBlocks.BLOCKS.register("small_crystals_yellow_bud",
+            () -> new CustomSmallBudBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SMALL_AMETHYST_BUD)));
+
+    public static final Supplier<Block> SMALL_CRYSTALS_GREEN_BUD = ModBlocks.BLOCKS.register("small_crystals_green_bud",
+            () -> new CustomSmallBudBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SMALL_AMETHYST_BUD)));
+
+    public static final Supplier<Block> SMALL_CRYSTALS_BLUE_BUD = ModBlocks.BLOCKS.register("small_crystals_blue_bud",
+            () -> new CustomSmallBudBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SMALL_AMETHYST_BUD)));
+
+    public static final Supplier<Block> SMALL_CRYSTALS_ORANGE_BUD = ModBlocks.BLOCKS.register("small_crystals_orange_bud",
+            () -> new CustomSmallBudBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SMALL_AMETHYST_BUD)));
+
+    public static final Supplier<Block> SMALL_CRYSTALS_RED_BUD = ModBlocks.BLOCKS.register("small_crystals_red_bud",
+            () -> new CustomSmallBudBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SMALL_AMETHYST_BUD)));
 
     /**
-     * 水晶块（完整方块，支持7种颜色变体）
+     * 橙色水晶生长状态方块
      * <p>
-     * Crystal block (full block, supports 7 color variants)
+     * Orange crystal growth state blocks
+     * 这些方块在创造模式标签栏不可见
+     * These blocks are not visible in creative mode tab
      */
-    public static final Supplier<Block> CRYSTAL_BLOCK = BLOCKS.register("crystal_block",
-            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK)) {
-                // 方块状态将包含颜色属性
-            });
+    public static final Supplier<Block> MEDIUM_CRYSTALS_ORANGE_BUD = ModBlocks.BLOCKS.register("medium_crystals_orange_bud",
+            () -> new CustomMediumBudBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.MEDIUM_AMETHYST_BUD)));
+
+    public static final Supplier<Block> LARGE_CRYSTALS_ORANGE_BUD = ModBlocks.BLOCKS.register("large_crystals_orange_bud",
+            () -> new CustomLargeBudBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)));
+
+    public static final Supplier<Block> BUDDING_ORANGE_CRYSTALS = ModBlocks.BLOCKS.register("budding_orange_crystals",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BUDDING_AMETHYST)));
 
     /**
-     * 水晶簇（类似紫水晶簇，支持7种颜色变体）
+     * 橙色水晶装饰方块
      * <p>
-     * Crystal cluster (similar to amethyst cluster, supports 7 color variants)
+     * Orange crystal decorative blocks
+     * 这些方块将放在装饰方块标签中
+     * These blocks will be placed in the decorative blocks tab
      */
-    public static final Supplier<Block> CRYSTAL_CLUSTER = BLOCKS.register("crystal_cluster",
-            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_CLUSTER)) {
-                // 方块状态将包含颜色属性
-            });
+    public static final Supplier<Block> CRYSTALS_ORANGE_CLUSTER = ModBlocks.BLOCKS.register("crystals_orange_cluster",
+            () -> new CustomClusterBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_CLUSTER)));
+
+    public static final Supplier<Block> CRYSTALS_ORANGE_BLOCK = ModBlocks.BLOCKS.register("crystals_orange_block",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK)));
 }

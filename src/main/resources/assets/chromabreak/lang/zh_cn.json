@@ -1,19 +1,26 @@
 {
   "itemGroup.chromabreak": "Chroma Break",
-  "block.chromabreak.example_block": "示例方块",
-  "item.chromabreak.example_item": "示例物品",
-  "chromabreak.configuration.title": "Chroma Break 配置",
-  "chromabreak.configuration.section.chromabreak.common.toml": "Chroma Break 配置",
-  "chromabreak.configuration.section.chromabreak.common.toml.title": "Chroma Break 配置",
-  "chromabreak.configuration.items": "物品列表",
-  "chromabreak.configuration.logDirtBlock": "记录泥土方块",
-  "chromabreak.configuration.magicNumberIntroduction": "魔法数字文本",
-  "chromabreak.configuration.magicNumber": "魔法数字",
   "chromabreak.configuration.showEntityHealthBar": "显示生物血条",
-  // 水晶碎片物品（使用纹理着色系统）
-  "item.chromabreak.crystal_shard": "水晶碎片",
-  // 水晶块方块（使用纹理着色系统）
+  "item.chromabreak.black_crystal_shard": "黑水晶碎片",
+  "item.chromabreak.white_crystal_shard": "白水晶碎片",
+  "item.chromabreak.yellow_crystal_shard": "黄水晶碎片",
+  "item.chromabreak.green_crystal_shard": "绿水晶碎片",
+  "item.chromabreak.blue_crystal_shard": "蓝水晶碎片",
+  "item.chromabreak.orange_crystal_shard": "橙水晶碎片",
+  "item.chromabreak.red_crystal_shard": "红水晶碎片",
+  "block.chromabreak.small_crystals_black_bud": "黑水晶芽",
+  "block.chromabreak.small_crystals_white_bud": "白水晶芽",
+  "block.chromabreak.small_crystals_yellow_bud": "黄水晶芽",
+  "block.chromabreak.small_crystals_green_bud": "绿水晶芽",
+  "block.chromabreak.small_crystals_blue_bud": "蓝水晶芽",
+  "block.chromabreak.small_crystals_orange_bud": "橙水晶芽",
+  "block.chromabreak.small_crystals_red_bud": "红水晶芽",
+  "block.chromabreak.medium_crystals_orange_bud": "中型橙水晶芽",
+  "block.chromabreak.large_crystals_orange_bud": "大型橙水晶芽",
+  "block.chromabreak.budding_orange_crystals": "萌芽橙水晶块",
+  "block.chromabreak.crystals_orange_cluster": "橙水晶簇",
+  "block.chromabreak.crystals_orange_block": "橙水晶块",
+
   "block.chromabreak.crystal_block": "水晶块",
-  // 水晶簇方块（使用纹理着色系统）
   "block.chromabreak.crystal_cluster": "水晶簇"
 }
