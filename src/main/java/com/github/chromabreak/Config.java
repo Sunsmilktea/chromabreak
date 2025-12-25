@@ -88,18 +88,6 @@ public enum Config {
             .comment("Health bar foreground (filled) color in hex format (e.g., #FFC0CB for pink)\n血条前景（填充）颜色配置（十六进制格式，例如：#FFC0CB表示粉色）")
             .define("healthBarForegroundColor", "#FFC0CB");
     /**
-     * 血条圆角半径配置
-     * 双精度浮点数配置选项，默认值为2.0，范围从0.0到10.0
-     * 最小值：0.0（直角），最大值：10.0
-     * <p>
-     * Health bar corner radius configuration
-     * Double configuration option with default value 2.0, range from 0.0 to 10.0
-     * Minimum value: 0.0 (square corners), Maximum value: 10.0
-     */
-    public static final ModConfigSpec.DoubleValue HEALTH_BAR_CORNER_RADIUS = Config.BUILDER
-            .comment("Health bar corner radius. 0.0 for square corners, higher values for more rounded corners. Minimum: 0.0, Maximum: 10.0\n血条圆角半径配置。0.0表示直角，值越大圆角越明显。最小值：0.0，最大值：10.0")
-            .defineInRange("healthBarCornerRadius", 2.0, 0.0, 10.0);
-    /**
      * 血条红色填充透明度配置
      * 双精度浮点数配置选项，默认值为0.9，范围从0.0到1.0
      * 最小值：0.0（完全透明），最大值：1.0（完全不透明）

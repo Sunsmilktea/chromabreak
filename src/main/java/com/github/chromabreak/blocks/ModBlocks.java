@@ -54,13 +54,6 @@ public enum ModBlocks {
     public static final Supplier<Block> SMALL_CRYSTALS_RED_BUD = ModBlocks.BLOCKS.register("small_crystals_red_bud",
             () -> new CustomSmallBudBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SMALL_AMETHYST_BUD)));
 
-    /**
-     * 橙色水晶生长状态方块
-     * <p>
-     * Orange crystal growth state blocks
-     * 这些方块在创造模式标签栏不可见
-     * These blocks are not visible in creative mode tab
-     */
     public static final Supplier<Block> MEDIUM_CRYSTALS_ORANGE_BUD = ModBlocks.BLOCKS.register("medium_crystals_orange_bud",
             () -> new CustomMediumBudBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.MEDIUM_AMETHYST_BUD)));
 
