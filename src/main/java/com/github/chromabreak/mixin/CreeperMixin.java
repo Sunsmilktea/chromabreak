@@ -2,6 +2,7 @@ package com.github.chromabreak.mixin;
 
 import net.minecraft.world.entity.monster.Creeper;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -26,7 +27,7 @@ public class CreeperMixin {
      */
     @Inject(method = "explodeCreeper", at = @At("HEAD"), remap = true)
     private void onExplodeCreeper(final CallbackInfo ci) {
-        this.clearToughnessAndHealth();
+        this.chromabreak$clearToughnessAndHealth();
     }
 
     // 注意：hurt 方法在 LivingEntity 中，不在 Creeper 中
@@ -38,7 +39,8 @@ public class CreeperMixin {
      * 清空韧性和血量
      * Clear toughness and health
      */
-    private void clearToughnessAndHealth() {
+    @Unique
+    private void chromabreak$clearToughnessAndHealth() {
         final Creeper creeper = (Creeper) (Object) this;
 
         // 检查是否有韧性值

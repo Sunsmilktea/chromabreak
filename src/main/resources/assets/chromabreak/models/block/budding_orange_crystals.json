@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "chromabreak:block/budding_orange_crystals"
-  }
-}
