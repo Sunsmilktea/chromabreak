@@ -3,9 +3,9 @@
   "package": "com.github.chromabreak.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "LivingEntityMixin",
+    "CreeperMixin",
     "LivingEntityMaxHealthMixin",
-    "CreeperMixin"
+    "LivingEntityMixin"
   ],
   "client": [
   ],

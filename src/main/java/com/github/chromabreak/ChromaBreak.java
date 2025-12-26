@@ -30,7 +30,7 @@ import org.slf4j.Logger;
  * Specific functionality implementations have been separated into dedicated packages and classes:
  * - events package: handles various event listeners
  * - config package: handles configuration-related functionality
- * - blocks package: handles block-related functionality
+ * - block package: handles block-related functionality
  */
 @Mod(ChromaBreak.MODID)
 public class ChromaBreak {
@@ -68,7 +68,7 @@ public class ChromaBreak {
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
         // 注册物品、方块和数据组件到模组事件总线
-        // Register items, blocks and data components to mod event bus
+        // Register items, block and data components to mod event bus
         ModItems.ITEMS.register(modEventBus);
         ModBlocks.BLOCKS.register(modEventBus);
 
@@ -94,6 +94,10 @@ public class ChromaBreak {
             // 加载实体配置
             // Load entity configurations
             EntityConfigLoader.loadEntityConfigs();
+
+            // 初始化世界生成
+            // Initialize world generation
+            com.github.chromabreak.world.ModWorldGeneration.initialize();
         });
     }
 }
