@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "chromabreak:block/medium_crystals_orange_bud"
+  }
+}
