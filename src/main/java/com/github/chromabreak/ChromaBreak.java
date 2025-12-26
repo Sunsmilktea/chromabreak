@@ -5,12 +5,15 @@ import com.github.chromabreak.config.ConfigExampleGenerator;
 import com.github.chromabreak.config.EntityConfigLoader;
 import com.github.chromabreak.config.ModCompatibilityConfigLoader;
 import com.github.chromabreak.items.ModItems;
+import com.github.chromabreak.tool.StructureFinderCommand;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -75,6 +78,22 @@ public class ChromaBreak {
         // 注册模组事件总线监听器
         // Register mod event bus listener
         modEventBus.addListener(this::onCommonSetup);
+
+        // 注册Forge事件总线监听器（命令注册）
+        // Register Forge event bus listener (command registration)
+        NeoForge.EVENT_BUS.addListener(this::onRegisterCommands);
+    }
+
+    /**
+     * 注册命令
+     * Register commands
+     *
+     * @param event 命令注册事件
+     */
+    private void onRegisterCommands(final RegisterCommandsEvent event) {
+        StructureFinderCommand.register(event.getDispatcher());
+        LOGGER.info("StructureFinder命令已注册");
+        LOGGER.info("StructureFinder command registered");
     }
 
     /**

@@ -1,0 +1,6 @@
+{
+  "parent": "item/amethyst_bud",
+  "textures": {
+    "layer0": "chromabreak:block/small_crystals_orange_bud"
+  }
+}

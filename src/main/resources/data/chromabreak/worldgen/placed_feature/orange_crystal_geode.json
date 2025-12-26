@@ -1,0 +1,36 @@
+{
+  "feature": "chromabreak:orange_crystal_geode",
+  "placement": [
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 40
+    },
+    {
+      "type": "minecraft:count",
+      "count": 4
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:biased_to_bottom",
+        "min_inclusive": {
+          "above_bottom": 6
+        },
+        "max_inclusive": {
+          "above_bottom": 56
+        },
+        "inner": 4
+      }
+    },
+    {
+      "type": "minecraft:biome",
+      "biomes": [
+        "minecraft:badlands",
+        "minecraft:desert"
+      ]
+    }
+  ]
+}
