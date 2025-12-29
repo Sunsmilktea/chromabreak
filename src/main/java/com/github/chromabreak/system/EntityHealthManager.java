@@ -8,11 +8,30 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 生物血量管理器
- * 负责管理通过KubeJS自定义的生物生命值和韧性值
- * <p>
+ * EntityHealthManager - 实体健康管理器
  * Entity Health Manager
- * Responsible for managing custom entity health and toughness values via KubeJS
+ * <p>
+ * 负责管理实体的自定义健康相关设置，包括最大生命值、韧性值和韧性颜色分布
+ * Responsible for managing custom health-related settings for entities, including maximum health, toughness values, and toughness color distributions
+ * <p>
+ * 主要功能包括：
+ * Main functionalities include:
+ * - 自定义最大生命值的管理（设置、获取、移除）
+ * Management of custom maximum health (set, get, remove)
+ * - 自定义韧性值的管理（设置、获取、移除）
+ * Management of custom toughness values (set, get, remove)
+ * - 自定义韧性颜色分布的管理（设置、获取、移除）
+ * Management of custom toughness color distributions (set, get, remove)
+ * - 实体类型字符串的标准化处理
+ * Standardized processing of entity type strings
+ * - 自定义设置的批量应用和清理
+ * Batch application and cleanup of custom settings
+ * <p>
+ * 使用枚举模式确保单例，所有方法都是静态方法
+ * Uses enum pattern to ensure singleton, all methods are static methods
+ * <p>
+ * 支持通过KubeJS脚本和配置文件自定义实体健康行为
+ * Supports custom entity health behavior through KubeJS scripts and configuration files
  */
 public enum EntityHealthManager {
     ;

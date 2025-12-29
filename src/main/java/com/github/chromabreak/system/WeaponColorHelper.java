@@ -10,11 +10,73 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 武器颜色辅助类
- * 处理武器上的颜色标记（存储在DataComponents中）
- * <p>
+ * WeaponColorHelper - 武器颜色助手类
  * Weapon Color Helper Class
- * Handles color markers on weapons (stored in DataComponents)
+ * <p>
+ * 负责管理武器上的颜色标记，用于韧性系统的颜色匹配和破坏逻辑
+ * Responsible for managing color markers on weapons, used for color matching and breaking logic in toughness system
+ * <p>
+ * 主要功能包括：
+ * Main functionalities include:
+ * - 颜色标记管理：在武器上添加、移除、检查颜色标记
+ * Color marker management: Add, remove, check color markers on weapons
+ * - DataComponents存储：使用Minecraft 1.21.1的DataComponents系统存储颜色信息
+ * DataComponents storage: Uses Minecraft 1.21.1 DataComponents system to store color information
+ * - 韧性破坏检查：检查武器是否可以破坏特定颜色或颜色分布的韧性
+ * Toughness breaking check: Checks if weapon can break toughness of specific color or color distribution
+ * - 反射兼容：使用反射处理DataComponents API，确保版本兼容性
+ * Reflection compatibility: Uses reflection to handle DataComponents API, ensuring version compatibility
+ * <p>
+ * 颜色标记系统：
+ * Color marker system:
+ * - 颜色存储：颜色信息存储在DataComponents的CUSTOM_DATA组件中
+ * Color storage: Color information stored in CUSTOM_DATA component of DataComponents
+ * - NBT结构：使用NBT列表存储颜色名称字符串
+ * NBT structure: Uses NBT list to store color name strings
+ * - 标签标识：使用"chromabreak_weapon_colors"作为颜色标记的标识符
+ * Tag identifier: Uses "chromabreak_weapon_colors" as identifier for color markers
+ * <p>
+ * 韧性系统集成：
+ * Toughness system integration:
+ * - 颜色匹配：武器必须拥有与实体韧性颜色匹配的颜色才能造成伤害
+ * Color matching: Weapon must have colors matching entity toughness colors to deal damage
+ * - 分布检查：支持检查武器是否拥有颜色分布中的所有颜色
+ * Distribution check: Supports checking if weapon has all colors in color distribution
+ * - 多颜色支持：武器可以拥有多个颜色标记
+ * Multi-color support: Weapon can have multiple color markers
+ * <p>
+ * 设计特点：
+ * Design features:
+ * - 枚举单例模式：使用枚举确保单例，所有方法都是静态方法
+ * Enum singleton pattern: Uses enum to ensure singleton, all methods are static methods
+ * - 反射兼容：通过反射处理DataComponents API，避免直接依赖特定版本
+ * Reflection compatibility: Handles DataComponents API through reflection to avoid direct version dependency
+ * - 错误处理：完善的错误处理机制，避免崩溃
+ * Error handling: Comprehensive error handling mechanism to avoid crashes
+ * - 性能优化：避免不必要的计算和内存分配
+ * Performance optimization: Avoids unnecessary calculations and memory allocations
+ * <p>
+ * 使用场景：
+ * Usage scenarios:
+ * - 武器染色：玩家可以通过染料为武器添加颜色标记
+ * Weapon dyeing: Players can add color markers to weapons using dyes
+ * - 韧性系统：武器颜色决定其可以破坏的韧性类型
+ * Toughness system: Weapon colors determine which toughness types it can break
+ * - 游戏平衡：通过颜色系统实现复杂的伤害计算逻辑
+ * Game balance: Implements complex damage calculation logic through color system
+ * - 模组集成：与其他模组配合，提供颜色标记功能
+ * Mod integration: Works with other mods to provide color marking functionality
+ * <p>
+ * 技术实现细节：
+ * Technical implementation details:
+ * - DataComponents API：使用Minecraft 1.21.1的新数据组件系统
+ * DataComponents API: Uses Minecraft 1.21.1's new data component system
+ * - 反射调用：通过反射调用DataComponents相关方法，确保版本兼容性
+ * Reflection calls: Calls DataComponents related methods through reflection for version compatibility
+ * - NBT序列化：颜色信息通过NBT格式序列化存储
+ * NBT serialization: Color information serialized and stored in NBT format
+ * - 异常处理：完善的异常处理，确保系统稳定性
+ * Exception handling: Comprehensive exception handling ensures system stability
  */
 public enum WeaponColorHelper {
     ;

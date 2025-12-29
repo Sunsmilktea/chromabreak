@@ -9,19 +9,89 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
 /**
- * 配置文件示例生成器
- * 自动生成 chromabreak-common.toml.example 文件
- * <p>
+ * ConfigExampleGenerator - 配置文件示例生成器
  * Configuration Example File Generator
- * Automatically generates chromabreak-common.toml.example file
+ * <p>
+ * 负责自动生成ChromaBreak模组的配置文件示例文件 (chromabreak-common.toml.example)
+ * Responsible for automatically generating configuration example file for ChromaBreak mod (chromabreak-common.toml.example)
+ * <p>
+ * 主要功能包括：
+ * Main functionalities include:
+ * - 配置文件生成：在模组启动时自动生成配置文件示例
+ * Configuration file generation: Automatically generate configuration example file when mod starts
+ * - 示例内容生成：生成包含详细说明和示例的配置文件内容
+ * Example content generation: Generate configuration file content with detailed instructions and examples
+ * - 文件管理：检查文件存在性、创建目录、写入文件
+ * File management: Check file existence, create directories, write files
+ * - 错误处理：处理文件操作过程中的异常
+ * Error handling: Handle exceptions during file operations
+ * <p>
+ * 生成的配置文件内容：
+ * Generated configuration file content:
+ * - 实体配置示例：包含多种实体的韧性条配置示例
+ * Entity configuration examples: Contains toughness bar configuration examples for various entities
+ * - 模组兼容性配置：绕过韧性系统的模组ID和物品ID模式
+ * Mod compatibility configuration: Mod IDs and item ID patterns that bypass the toughness system
+ * - 详细说明文档：包含配置格式说明和使用示例
+ * Detailed documentation: Contains configuration format instructions and usage examples
+ * <p>
+ * 使用场景：
+ * Usage scenarios:
+ * - 模组首次启动时自动生成示例配置文件
+ * Automatically generate example configuration file when mod first starts
+ * - 为开发者提供配置模板和参考
+ * Provide configuration templates and references for developers
+ * - 帮助用户理解配置格式和选项
+ * Help users understand configuration formats and options
+ * <p>
+ * 设计特点：
+ * Design features:
+ * - 非覆盖性生成：如果示例文件已存在，不会覆盖现有文件
+ * Non-overwriting generation: If example file already exists, won't overwrite existing file
+ * - 详细文档：生成的配置文件包含详细的中英双语说明
+ * Detailed documentation: Generated configuration file contains detailed bilingual instructions
+ * - 实用示例：提供多种实体的配置示例，覆盖常见使用场景
+ * Practical examples: Provide configuration examples for various entities, covering common usage scenarios
+ * <p>
+ * 使用枚举模式确保单例，所有方法都是静态方法
+ * Uses enum pattern to ensure singleton, all methods are static methods
  */
 public enum ConfigExampleGenerator {
     ;
+
+    /**
+     * 示例文件名
+     * Example file name
+     * <p>
+     * 生成的配置文件示例的文件名
+     * File name of the generated configuration example file
+     */
     private static final String EXAMPLE_FILE_NAME = "chromabreak-common.toml.example";
 
     /**
-     * 生成配置文件示例
+     * 生成配置文件示例文件
      * Generate configuration example file
+     * <p>
+     * 主生成方法，负责创建配置文件示例文件
+     * Main generation method, responsible for creating configuration example file
+     * <p>
+     * 处理逻辑：
+     * Processing logic:
+     * 1. 获取配置目录路径
+     * Get configuration directory path
+     * 2. 检查示例文件是否已存在（避免覆盖）
+     * Check if example file already exists (avoid overwriting)
+     * 3. 确保配置目录存在
+     * Ensure configuration directory exists
+     * 4. 生成示例文件内容
+     * Generate example file content
+     * 5. 将内容写入文件
+     * Write content to file
+     * 6. 记录生成结果
+     * Log generation result
+     * <p>
+     * 异常处理：如果发生IO异常，记录警告日志但不中断程序
+     * Exception handling: If IO exception occurs, log warning but don't interrupt program
      */
     public static void generateExampleFile() {
         try {
@@ -60,8 +130,23 @@ public enum ConfigExampleGenerator {
     /**
      * 生成示例文件内容
      * Generate example file content
+     * <p>
+     * 生成包含详细说明和示例的配置文件内容
+     * Generate configuration file content with detailed instructions and examples
      *
-     * @return 示例文件内容
+     * @return 示例文件内容，包含实体配置示例和模组兼容性配置
+     * Example file content, containing entity configuration examples and mod compatibility configuration
+     * <p>
+     * 内容结构：
+     * Content structure:
+     * - 文件头说明：配置文件的用途和基本说明
+     * File header description: Purpose and basic instructions of configuration file
+     * - 实体配置说明：配置格式和使用方法的详细说明
+     * Entity configuration instructions: Detailed instructions on configuration format and usage
+     * - 实体配置示例：多种实体的配置示例
+     * Entity configuration examples: Configuration examples for various entities
+     * - 模组兼容性配置：绕过韧性系统的模组和物品配置
+     * Mod compatibility configuration: Mod and item configurations that bypass toughness system
      */
     private static String generateExampleContent() {
         return """

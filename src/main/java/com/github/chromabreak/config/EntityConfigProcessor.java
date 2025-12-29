@@ -13,11 +13,60 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 实体配置处理器
- * 提供通用的实体配置解析和处理逻辑，供EntityConfigLoader和ChromaBreakKubeJSPlugin共享使用
- * <p>
+ * EntityConfigProcessor - 实体配置处理器
  * Entity Configuration Processor
- * Provides common entity configuration parsing and processing logic for shared use by EntityConfigLoader and ChromaBreakKubeJSPlugin
+ * <p>
+ * 负责解析和处理ChromaBreak模组的实体配置，将JSON配置转换为EntityHealthManager的设置
+ * Responsible for parsing and processing entity configurations for ChromaBreak mod,
+ * converting JSON configurations to EntityHealthManager settings
+ * <p>
+ * 主要功能包括：
+ * Main functionalities include:
+ * - JSON配置解析：解析实体配置的JSON字符串
+ * JSON configuration parsing: Parse JSON strings of entity configurations
+ * - 配置验证：验证配置的完整性和有效性
+ * Configuration validation: Validate configuration completeness and validity
+ * - 配置处理：将配置应用到EntityHealthManager
+ * Configuration processing: Apply configurations to EntityHealthManager
+ * - 错误处理：处理配置解析和处理过程中的错误
+ * Error handling: Handle errors during configuration parsing and processing
+ * <p>
+ * 支持的配置类型：
+ * Supported configuration types:
+ * - 最大生命值配置 (maxHealth)
+ * Maximum health configuration (maxHealth)
+ * - 最大韧性值配置 (maxToughness)
+ * Maximum toughness configuration (maxToughness)
+ * - 韧性颜色配置 (toughnessColor - 单色)
+ * Toughness color configuration (toughnessColor - single color)
+ * - 多色分布配置 (toughnessColors - 多色百分比分布)
+ * Multi-color distribution configuration (toughnessColors - multi-color percentage distribution)
+ * <p>
+ * 配置格式示例：
+ * Configuration format examples:
+ * 单色配置：
+ * Single color configuration:
+ * {
+ * "entityType": "minecraft:zombie",
+ * "maxHealth": 30.0,
+ * "maxToughness": 20.0,
+ * "toughnessColor": "red"
+ * }
+ * <p>
+ * 多色配置：
+ * Multi-color configuration:
+ * {
+ * "entityType": "minecraft:skeleton",
+ * "maxHealth": 25.0,
+ * "maxToughness": 15.0,
+ * "toughnessColors": {
+ * "red": 0.5,
+ * "blue": 0.5
+ * }
+ * }
+ * <p>
+ * 使用枚举模式确保单例，所有方法都是静态方法
+ * Uses enum pattern to ensure singleton, all methods are static methods
  */
 public enum EntityConfigProcessor {
     ;

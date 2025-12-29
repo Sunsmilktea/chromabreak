@@ -9,14 +9,76 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 /**
- * KubeJS Plugin for ChromaBreak mod
- * Provides JavaScript bindings and events for ChromaBreak functionality
+ * ChromaBreakKubeJSPlugin - ChromaBreak KubeJS插件类
+ * ChromaBreak KubeJS Plugin Class
  * <p>
- * ChromaBreak模组的KubeJS插件
- * 为ChromaBreak功能提供JavaScript绑定和事件支持
+ * 为ChromaBreak模组提供KubeJS脚本支持，允许通过JavaScript脚本动态配置模组功能
+ * Provides KubeJS script support for ChromaBreak mod, allowing dynamic configuration of mod features through JavaScript scripts
  * <p>
- * 这个插件允许在KubeJS脚本中访问和操作ChromaBreak模组的功能，
- * 通过JavaScript绑定机制将模组功能暴露给脚本开发者使用。
+ * 主要功能包括：
+ * Main functionalities include:
+ * - KubeJS插件注册：在KubeJS环境中注册ChromaBreak API
+ * KubeJS plugin registration: Registers ChromaBreak API in KubeJS environment
+ * - 脚本绑定：将ChromaBreak功能绑定到JavaScript全局对象
+ * Script binding: Binds ChromaBreak functionality to JavaScript global objects
+ * - 实体配置API：提供实体生命值、韧性、颜色配置的脚本接口
+ * Entity configuration API: Provides script interfaces for entity health, toughness, color configuration
+ * - 模组兼容性API：提供模组兼容性配置的脚本接口
+ * Mod compatibility API: Provides script interfaces for mod compatibility configuration
+ * - 调试和日志：提供脚本调试和日志记录功能
+ * Debugging and logging: Provides script debugging and logging functionality
+ * <p>
+ * KubeJS API功能：
+ * KubeJS API functionalities:
+ * - 实体管理：设置、获取、移除实体的最大生命值、韧性值
+ * Entity management: Set, get, remove entity max health, toughness values
+ * - 颜色配置：设置单色或多色分布的韧性条颜色
+ * Color configuration: Set single color or multi-color distribution for toughness bars
+ * - 模组兼容性：管理绕过韧性系统的伤害类型、模组ID、物品模式
+ * Mod compatibility: Manage damage types, mod IDs, item patterns that bypass toughness system
+ * - 配置批量处理：批量处理实体配置
+ * Batch configuration: Batch process entity configurations
+ * - 状态查询：查询当前配置状态
+ * Status query: Query current configuration status
+ * <p>
+ * 使用场景：
+ * Usage scenarios:
+ * - 动态配置：在游戏运行时通过脚本动态修改模组配置
+ * Dynamic configuration: Dynamically modify mod configuration through scripts during gameplay
+ * - 模组集成：与其他模组集成，提供脚本化的配置接口
+ * Mod integration: Integrate with other mods, providing scripted configuration interfaces
+ * - 服务器管理：服务器管理员可以通过脚本管理实体配置
+ * Server management: Server administrators can manage entity configurations through scripts
+ * - 自定义游戏模式：创建自定义游戏模式，动态调整实体属性
+ * Custom game modes: Create custom game modes, dynamically adjust entity attributes
+ * <p>
+ * 脚本示例：
+ * Script examples:
+ * // 设置实体最大生命值
+ * // Set entity max health
+ * ChromaBreak.setEntityMaxHealth("minecraft:zombie", 50.0);
+ * <p>
+ * // 设置韧性颜色分布
+ * // Set toughness color distribution
+ * ChromaBreak.setEntityToughnessColorDistribution("minecraft:skeleton", {
+ * "red": 0.5,
+ * "blue": 0.5
+ * });
+ * <p>
+ * // 添加绕过模组
+ * // Add bypass mod
+ * ChromaBreak.addBypassModId("avaritia");
+ * <p>
+ * 设计特点：
+ * Design features:
+ * - 类型安全：提供类型安全的API接口，减少脚本错误
+ * Type safety: Provides type-safe API interfaces to reduce script errors
+ * - 错误处理：完善的错误处理和日志记录
+ * Error handling: Comprehensive error handling and logging
+ * - 性能优化：避免不必要的计算和内存分配
+ * Performance optimization: Avoids unnecessary calculations and memory allocations
+ * - 向后兼容：保持API的向后兼容性
+ * Backward compatibility: Maintains backward compatibility of API
  */
 public class ChromaBreakKubeJSPlugin implements KubeJSPlugin {
     /**

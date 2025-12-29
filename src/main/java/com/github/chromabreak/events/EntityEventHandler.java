@@ -23,11 +23,66 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 实体事件处理器类
- * 负责处理实体相关的事件，如初始化韧性系统
- * <p>
+ * EntityEventHandler - 实体事件处理器类
  * Entity Event Handler Class
- * Responsible for handling entity-related events, such as toughness system initialization
+ * <p>
+ * 负责处理ChromaBreak模组的实体相关事件，包括韧性系统初始化、帽子系统、实体交互等
+ * Responsible for handling entity-related events in ChromaBreak mod, including toughness system initialization, hat system, entity interactions, etc.
+ * <p>
+ * 主要功能包括：
+ * Main functionalities include:
+ * - 韧性系统初始化：在实体生成时初始化韧性系统和自定义生命值
+ * Toughness system initialization: Initialize toughness system and custom health values when entities spawn
+ * - 帽子系统：为骷髅和僵尸添加随机帽子，并防止帽子掉落
+ * Hat system: Add random hats to skeletons and zombies, and prevent hat drops
+ * - 实体掉落管理：管理实体死亡时的掉落物，保护特殊物品
+ * Entity drop management: Manage entity drops on death, protect special items
+ * - 玩家交互处理：处理玩家与实体的交互事件
+ * Player interaction handling: Handle player interaction events with entities
+ * - 事件订阅：订阅NeoForge的各种实体相关事件
+ * Event subscription: Subscribe to various NeoForge entity-related events
+ * <p>
+ * 事件处理类型：
+ * Event handling types:
+ * - EntityJoinLevelEvent：实体加入世界事件，用于初始化韧性系统和添加帽子
+ * EntityJoinLevelEvent: Entity join world event, used for toughness system initialization and hat addition
+ * - LivingDropsEvent：生物掉落事件，用于管理掉落物和保护帽子
+ * LivingDropsEvent: Living entity drops event, used for drop management and hat protection
+ * - PlayerInteractEvent：玩家交互事件，用于处理玩家与实体的交互
+ * PlayerInteractEvent: Player interaction event, used for handling player-entity interactions
+ * <p>
+ * 帽子系统特性：
+ * Hat system features:
+ * - 稀有度系统：帽子按稀有度分类（普通、不常见、稀有、史诗、传说）
+ * Rarity system: Hats categorized by rarity (common, uncommon, rare, epic, legendary)
+ * - 随机选择：根据稀有度权重随机选择帽子
+ * Random selection: Randomly select hats based on rarity weights
+ * - 防掉落保护：使用NBT标记保护帽子不被掉落
+ * Drop protection: Use NBT tags to protect hats from being dropped
+ * - 兼容性检查：只添加已加载模组的帽子物品
+ * Compatibility check: Only add hat items from loaded mods
+ * <p>
+ * 设计特点：
+ * Design features:
+ * - 枚举单例模式：使用枚举确保单例，所有方法都是静态方法
+ * Enum singleton pattern: Uses enum to ensure singleton, all methods are static methods
+ * - 事件驱动：基于NeoForge事件系统，自动响应实体事件
+ * Event-driven: Based on NeoForge event system, automatically responds to entity events
+ * - 模块化设计：各个功能模块独立，便于维护和扩展
+ * Modular design: Each functional module is independent, easy to maintain and extend
+ * - 错误处理：完善的错误处理机制，避免崩溃
+ * Error handling: Comprehensive error handling mechanism to avoid crashes
+ * <p>
+ * 使用场景：
+ * Usage scenarios:
+ * - 游戏平衡：通过韧性系统和帽子系统增强游戏体验
+ * Game balance: Enhance gameplay experience through toughness system and hat system
+ * - 趣味性：为骷髅和僵尸添加帽子增加游戏趣味性
+ * Fun factor: Add hats to skeletons and zombies to increase game fun
+ * - 服务器管理：服务器管理员可以通过事件系统管理实体行为
+ * Server management: Server administrators can manage entity behavior through event system
+ * - 模组集成：与其他模组和谐共存，不干扰其他模组的功能
+ * Mod integration: Harmoniously coexists with other mods, doesn't interfere with other mods' functionality
  */
 @EventBusSubscriber(modid = ChromaBreak.MODID)
 public enum EntityEventHandler {

@@ -6,11 +6,32 @@ import net.minecraft.client.gui.GuiGraphics;
 import java.awt.*;
 
 /**
- * 血条渲染器类
- * 负责在HUD上渲染生物血条
- * <p>
+ * HealthBarRenderer - 血条渲染器类
  * Health Bar Renderer Class
- * Responsible for rendering health bars on HUD for entities
+ * <p>
+ * 负责在HUD上渲染生物的血条和韧性条，提供丰富的视觉效果和自定义选项
+ * Responsible for rendering health bars and toughness bars on HUD for entities, providing rich visual effects and customization options
+ * <p>
+ * 主要功能包括：
+ * Main functionalities include:
+ * - 血条和韧性条的HUD渲染（屏幕坐标）
+ * HUD rendering of health bars and toughness bars (screen coordinates)
+ * - 颜色解析和饱和度调整，支持十六进制颜色格式
+ * Color parsing and saturation adjustment, supporting hexadecimal color format
+ * - 渐变过渡渲染，实现平滑的颜色过渡效果
+ * Gradient transition rendering, achieving smooth color transition effects
+ * - 多色韧性条渲染，支持按百分比分布的颜色渲染
+ * Multi-color toughness bar rendering, supporting percentage-based color distribution
+ * - 阴影边框和背景渲染，增强视觉效果
+ * Shadow border and background rendering, enhancing visual effects
+ * - 性能优化，避免频繁的颜色解析和计算
+ * Performance optimization, avoiding frequent color parsing and calculations
+ * <p>
+ * 使用枚举模式确保单例，所有方法都是静态方法
+ * Uses enum pattern to ensure singleton, all methods are static methods
+ * <p>
+ * 支持通过配置文件自定义血条外观和颜色
+ * Supports customizing health bar appearance and colors through configuration files
  */
 public enum HealthBarRenderer {
     ;
@@ -18,17 +39,43 @@ public enum HealthBarRenderer {
     /**
      * 在HUD上渲染血条和韧性条（屏幕坐标）
      * Render health bar and toughness bar on HUD (screen coordinates)
+     * <p>
+     * 这是主要的渲染方法，负责在屏幕顶部居中位置渲染血条和韧性条
+     * This is the main rendering method, responsible for rendering health bar and toughness bar at top center of screen
+     * <p>
+     * 渲染流程包括：
+     * Rendering process includes:
+     * - 计算血条和韧性条的填充宽度
+     * Calculate filled width for health bar and toughness bar
+     * - 解析前景颜色并调整饱和度
+     * Parse foreground color and adjust saturation
+     * - 渲染韧性条（如果有韧性值）
+     * Render toughness bar (if toughness value exists)
+     * - 渲染血条
+     * Render health bar
+     * - 添加阴影边框和背景
+     * Add shadow border and background
      *
-     * @param guiGraphics         GUI图形上下文
-     * @param screenWidth         屏幕宽度
-     * @param y                   血条Y坐标
+     * @param guiGraphics         GUI图形上下文，用于绘制操作
+     *                            GUI graphics context for drawing operations
+     * @param screenWidth         屏幕宽度，用于水平居中计算
+     *                            Screen width for horizontal centering calculation
+     * @param y                   血条Y坐标，从屏幕顶部开始计算
+     *                            Health bar Y coordinate, calculated from top of screen
      * @param healthPercentage    生命值百分比 (0.0 - 1.0)
+     *                            Health percentage (0.0 - 1.0)
      * @param toughnessPercentage 韧性值百分比 (0.0 - 1.0)
-     * @param width               血条宽度
-     * @param height              血条高度
-     * @param foregroundColor     前景颜色（十六进制格式）
-     * @param redOpacity          红色填充透明度
+     *                            Toughness percentage (0.0 - 1.0)
+     * @param width               血条宽度（像素）
+     *                            Health bar width (pixels)
+     * @param height              血条高度（像素）
+     *                            Health bar height (pixels)
+     * @param foregroundColor     前景颜色（十六进制格式，如"#FFC0CB"）
+     *                            Foreground color (hexadecimal format, e.g., "#FFC0CB")
+     * @param redOpacity          红色填充透明度 (0.0 - 1.0)
+     *                            Red fill opacity (0.0 - 1.0)
      * @param colorDistribution   韧性颜色分布（可选，如果为null则使用默认白色）
+     *                            Toughness color distribution (optional, uses default white if null)
      */
     public static void renderHealthBarHUD(final GuiGraphics guiGraphics,
                                           final int screenWidth, final int y,

@@ -5,26 +5,82 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 /**
- * 韧性条系统管理器
- * 负责管理实体的韧性值和相关游戏机制
- * <p>
+ * ToughnessSystem - 韧性条系统管理器
  * Toughness System Manager
- * Responsible for managing entity toughness values and related game mechanics
+ * <p>
+ * 负责管理实体的韧性值和相关游戏机制，是ChromaBreak模组的核心系统之一
+ * Responsible for managing entity toughness values and related game mechanics, one of the core systems of ChromaBreak mod
+ * <p>
+ * 主要功能包括：
+ * Main functionalities include:
+ * - 韧性值的初始化和持久化存储
+ * Toughness value initialization and persistent storage
+ * - 韧性值的动态调整和削减计算
+ * Dynamic adjustment and reduction calculation of toughness values
+ * - 韧性颜色分布的管理和渲染支持
+ * Management of toughness color distribution and rendering support
+ * - 韧性破坏状态检测和回调处理
+ * Toughness broken state detection and callback handling
+ * - 基于防御值的韧性削减幅度计算
+ * Calculation of toughness reduction percentage based on defense values
+ * - 韧性存在时的伤害减免计算
+ * Damage reduction calculation when toughness is present
+ * <p>
+ * 使用枚举模式确保单例，所有方法都是静态方法
+ * Uses enum pattern to ensure singleton, all methods are static methods
+ * <p>
+ * 支持通过配置文件、KubeJS脚本和NBT数据自定义韧性行为
+ * Supports custom toughness behavior through configuration files, KubeJS scripts, and NBT data
  */
 public enum ToughnessSystem {
     ;
 
-    // 韧性值NBT标签键
-    // Toughness NBT tag keys
+    // ==================== NBT标签键常量 ====================
+    // ==================== NBT Tag Key Constants ====================
+
+    /**
+     * 当前韧性值NBT标签键
+     * Current toughness value NBT tag key
+     */
     private static final String TOUGHNESS_TAG = "chromabreak_toughness";
+
+    /**
+     * 最大韧性值NBT标签键
+     * Maximum toughness value NBT tag key
+     */
     private static final String MAX_TOUGHNESS_TAG = "chromabreak_max_toughness";
+
+    /**
+     * 韧性是否被破坏NBT标签键
+     * Whether toughness is broken NBT tag key
+     */
     private static final String IS_TOUGHNESS_BROKEN_TAG = "chromabreak_toughness_broken";
+
+    // ==================== 核心方法 ====================
+    // ==================== Core Methods ====================
 
     /**
      * 初始化实体的韧性系统
      * Initialize toughness system for entity
+     * <p>
+     * 这个方法在实体生成或加载时调用，用于设置初始韧性值和相关配置
+     * This method is called when entity spawns or loads, used to set initial toughness values and related configurations
+     * <p>
+     * 处理逻辑包括：
+     * Processing logic includes:
+     * - 检查实体是否应该有韧性条
+     * Check if entity should have toughness bar
+     * - 设置最大韧性值（优先使用自定义值）
+     * Set maximum toughness value (prefer custom values)
+     * - 设置当前韧性值（按比例调整或使用最大值）
+     * Set current toughness value (adjust proportionally or use maximum)
+     * - 初始化韧性破坏状态
+     * Initialize toughness broken state
+     * - 设置韧性颜色分布（支持自定义配置）
+     * Set toughness color distribution (supports custom configuration)
      *
      * @param entity 目标实体
+     *               Target entity
      */
     public static void initializeToughness(final LivingEntity entity) {
         if (ToughnessSystem.shouldHaveToughness(entity)) {
@@ -34,6 +90,8 @@ public enum ToughnessSystem {
             // Get max toughness (prefer custom value)
             final float maxToughness = ToughnessSystem.getDefaultMaxToughness(entity);
 
+            // 设置最大韧性值到NBT
+            // Set maximum toughness value to NBT
             if (!tag.contains(ToughnessSystem.MAX_TOUGHNESS_TAG)) {
                 tag.putFloat(ToughnessSystem.MAX_TOUGHNESS_TAG, maxToughness);
             } else {
@@ -44,11 +102,13 @@ public enum ToughnessSystem {
                 }
             }
 
+            // 设置当前韧性值到NBT
+            // Set current toughness value to NBT
             if (!tag.contains(ToughnessSystem.TOUGHNESS_TAG)) {
                 tag.putFloat(ToughnessSystem.TOUGHNESS_TAG, maxToughness);
             } else {
-                // 如果已有值，但存在自定义值，则更新它
-                // If value exists but custom value is set, update it
+                // 如果已有值，但存在自定义值，则按比例调整当前韧性值
+                // If value exists but custom value is set, adjust current toughness proportionally
                 if (0 < maxToughness) {
                     final float currentToughness = tag.getFloat(ToughnessSystem.TOUGHNESS_TAG);
                     final float currentMaxToughness = tag.getFloat(ToughnessSystem.MAX_TOUGHNESS_TAG);
@@ -63,6 +123,8 @@ public enum ToughnessSystem {
                 }
             }
 
+            // 初始化韧性破坏状态
+            // Initialize toughness broken state
             if (!tag.contains(ToughnessSystem.IS_TOUGHNESS_BROKEN_TAG)) {
                 tag.putBoolean(ToughnessSystem.IS_TOUGHNESS_BROKEN_TAG, false);
             }
@@ -102,9 +164,14 @@ public enum ToughnessSystem {
     /**
      * 获取实体的当前韧性值
      * Get current toughness value for entity
+     * <p>
+     * 从实体的NBT数据中读取当前韧性值
+     * Read current toughness value from entity's NBT data
      *
      * @param entity 目标实体
-     * @return 当前韧性值
+     *               Target entity
+     * @return 当前韧性值，如果实体不应该有韧性条则返回0.0f
+     * Current toughness value, returns 0.0f if entity should not have toughness bar
      */
     public static float getToughness(final LivingEntity entity) {
         if (!ToughnessSystem.shouldHaveToughness(entity)) {
@@ -118,9 +185,14 @@ public enum ToughnessSystem {
     /**
      * 获取实体的最大韧性值
      * Get maximum toughness value for entity
+     * <p>
+     * 从实体的NBT数据中读取最大韧性值
+     * Read maximum toughness value from entity's NBT data
      *
      * @param entity 目标实体
-     * @return 最大韧性值
+     *               Target entity
+     * @return 最大韧性值，如果实体不应该有韧性条则返回0.0f
+     * Maximum toughness value, returns 0.0f if entity should not have toughness bar
      */
     public static float getMaxToughness(final LivingEntity entity) {
         if (!ToughnessSystem.shouldHaveToughness(entity)) {
@@ -134,9 +206,14 @@ public enum ToughnessSystem {
     /**
      * 获取韧性值百分比
      * Get toughness percentage
+     * <p>
+     * 计算当前韧性值占最大韧性值的百分比
+     * Calculate the percentage of current toughness value relative to maximum toughness value
      *
      * @param entity 目标实体
-     * @return 韧性值百分比 (0.0 - 1.0)
+     *               Target entity
+     * @return 韧性值百分比 (0.0 - 1.0)，如果实体不应该有韧性条则返回0.0f
+     * Toughness percentage (0.0 - 1.0), returns 0.0f if entity should not have toughness bar
      */
     public static float getToughnessPercentage(final LivingEntity entity) {
         if (!ToughnessSystem.shouldHaveToughness(entity)) {
@@ -152,18 +229,16 @@ public enum ToughnessSystem {
     }
 
     /**
-     * 减少实体的韧性值
-     * Reduce entity toughness
-     *
-     * @param entity 目标实体
-     * @param amount 减少的量
-     */
-    /**
      * 根据生物防御值计算韧性削减幅度
      * Calculate toughness reduction percentage based on entity defense
+     * <p>
+     * 使用对数函数平滑过渡，防御值0-20映射到配置的最小-最大削减幅度
+     * Uses logarithmic function for smooth transition, defense value 0-20 maps to configured min-max reduction range
      *
      * @param entity 目标实体
+     *               Target entity
      * @return 削减幅度（0.0 - 1.0）
+     * Reduction percentage (0.0 - 1.0)
      */
     private static float calculateReductionPercentage(final LivingEntity entity) {
         // 获取配置的最小值和最大值
@@ -184,7 +259,8 @@ public enum ToughnessSystem {
                 }
             }
         } catch (final Exception e) {
-            // Ignore exceptions
+            // 忽略异常，防御值保持为0
+            // Ignore exceptions, defense value remains 0
         }
 
         // 根据防御值计算削减幅度
@@ -193,7 +269,7 @@ public enum ToughnessSystem {
         // Higher defense = higher reduction (within configured range)
         // 使用对数函数来平滑过渡（防御值0-20映射到min-max）
         // Use logarithmic function for smooth transition (defense 0-20 maps to min-max)
-        final float normalizedDefense = Math.min(defense / 20.0f, 1.0f); // 归一化到0-1
+        final float normalizedDefense = Math.min(defense / 20.0f, 1.0f); // 归一化到0-1 - Normalize to 0-1
         final float reduction = (float) (minReduction + (maxReduction - minReduction) * normalizedDefense);
 
         return Math.max((float) minReduction, Math.min((float) maxReduction, reduction));

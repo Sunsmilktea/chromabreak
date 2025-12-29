@@ -9,29 +9,84 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 模组兼容性管理器
- * 管理哪些伤害类型和模组可以绕过韧性系统
- * <p>
+ * ModCompatibilityManager - 模组兼容性管理器
  * Mod Compatibility Manager
- * Manages which damage types and mods can bypass the toughness system
+ * <p>
+ * 负责管理ChromaBreak模组与其他模组的兼容性，特别是处理哪些伤害类型和模组可以绕过韧性系统
+ * Responsible for managing compatibility between ChromaBreak mod and other mods,
+ * especially handling which damage types and mods can bypass the toughness system
+ * <p>
+ * 主要功能包括：
+ * Main functionalities include:
+ * - 伤害类型绕过检查：判断特定伤害类型是否可以绕过韧性系统
+ * Damage type bypass check: Determine if specific damage types can bypass toughness system
+ * - 模组ID管理：管理可以绕过韧性的模组ID列表
+ * Mod ID management: Manage list of mod IDs that can bypass toughness
+ * - 直接伤害实体识别：识别枪械、投射物等直接造成血量伤害的实体
+ * Direct damage entity identification: Identify entities that deal direct health damage (guns, projectiles, etc.)
+ * - 物品模式匹配：通过物品ID模式匹配识别直接伤害物品
+ * Item pattern matching: Identify direct damage items through item ID pattern matching
+ * - 配置管理：动态添加、移除和查询绕过配置
+ * Configuration management: Dynamically add, remove, and query bypass configurations
+ * <p>
+ * 支持的绕过类型：
+ * Supported bypass types:
+ * - 虚空伤害（始终绕过）
+ * Void damage (always bypasses)
+ * - 配置指定的伤害类型
+ * Config-specified damage types
+ * - 配置指定的模组ID
+ * Config-specified mod IDs
+ * - 枪械、投射物等直接伤害实体
+ * Direct damage entities like guns, projectiles
+ * <p>
+ * 使用枚举模式确保单例，所有方法都是静态方法
+ * Uses enum pattern to ensure singleton, all methods are static methods
+ * <p>
+ * 线程安全：所有集合操作都是线程安全的
+ * Thread safety: All collection operations are thread-safe
  */
 public enum ModCompatibilityManager {
     ;
 
-    // 存储可以绕过韧性的伤害类型
-    // Set of damage types that can bypass toughness
+    /**
+     * 存储可以绕过韧性的伤害类型
+     * Set of damage types that can bypass toughness
+     * <p>
+     * 包含Minecraft原版伤害类型和模组添加的伤害类型
+     * Contains vanilla Minecraft damage types and mod-added damage types
+     * 例如：magic, fire, drown, etc.
+     */
     private static final Set<String> BYPASS_DAMAGE_TYPES = new HashSet<>();
 
-    // 存储可以绕过韧性的模组ID
-    // Set of mod IDs that can bypass toughness
+    /**
+     * 存储可以绕过韧性的模组ID
+     * Set of mod IDs that can bypass toughness
+     * <p>
+     * 包含已知的直接造成血量伤害的模组ID
+     * Contains known mod IDs that deal direct health damage
+     * 例如：techguns, cgm, combatguns, etc.
+     */
     private static final Set<String> BYPASS_MOD_IDS = new HashSet<>();
 
-    // 已知的直接造成血量伤害的模组ID（从配置文件加载）
-    // Known mod IDs that deal direct health damage (loaded from config file)
+    /**
+     * 已知的直接造成血量伤害的模组ID（从配置文件加载）
+     * Known mod IDs that deal direct health damage (loaded from config file)
+     * <p>
+     * 用于识别枪械、特殊武器等模组
+     * Used to identify gun, special weapon, and other mods
+     */
     private static final Set<String> DIRECT_DAMAGE_MOD_IDS = new HashSet<>();
 
-    // 已知的直接造成血量伤害的物品ID模式（从配置文件加载）
-    // Known item ID patterns that deal direct health damage (loaded from config file)
+    /**
+     * 已知的直接造成血量伤害的物品ID模式（从配置文件加载）
+     * Known item ID patterns that deal direct health damage (loaded from config file)
+     * <p>
+     * 使用startsWith匹配物品ID前缀
+     * Uses startsWith to match item ID prefixes
+     * 例如："techguns:" 匹配所有Techguns模组的物品
+     * Example: "techguns:" matches all Techguns mod items
+     */
     private static final Set<String> DIRECT_DAMAGE_ITEM_PATTERNS = new HashSet<>();
 
     /**

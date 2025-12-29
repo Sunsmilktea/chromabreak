@@ -12,22 +12,65 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 
 /**
- * 客户端事件处理器类
- * 负责处理客户端渲染事件，显示血条HUD
- * <p>
+ * ClientEventHandler - 客户端事件处理器类
  * Client Event Handler Class
- * Responsible for handling client rendering events, displaying health bar HUD
+ * <p>
+ * 负责处理客户端渲染事件，显示实体的血条和韧性条HUD
+ * Responsible for handling client rendering events, displaying entity health bar and toughness bar HUD
+ * <p>
+ * 主要功能包括：
+ * Main functionalities include:
+ * - 监听GUI渲染事件，在屏幕顶部显示实体血条
+ * Listen to GUI rendering events, display entity health bar at top of screen
+ * - 性能优化，通过缓存配置值减少配置读取频率
+ * Performance optimization, reduce config read frequency through caching
+ * - 实体距离检查，限制血条渲染距离
+ * Entity distance checking, limit health bar rendering distance
+ * - 模组生物兼容性处理，防止异常崩溃
+ * Modded entity compatibility handling, prevent exception crashes
+ * - 血条和韧性条的协同渲染
+ * Coordinated rendering of health bar and toughness bar
+ * <p>
+ * 使用枚举模式确保单例，所有方法都是静态方法
+ * Uses enum pattern to ensure singleton, all methods are static methods
+ * <p>
+ * 通过NeoForge事件总线订阅器注册到客户端事件总线
+ * Registered to client event bus through NeoForge event bus subscriber
  */
 @EventBusSubscriber(modid = ChromaBreak.MODID, value = Dist.CLIENT)
 public enum ClientEventHandler {
     ;
 
     /**
-     * 渲染GUI覆盖层事件处理方法
-     * 在游戏窗口顶部中间显示光标指向生物的血条
+     * 渲染GUI覆盖层事件处理器
+     * Render GUI Overlay Event Handler
      * <p>
-     * Render GUI overlay event handler
-     * Display health bar of entity under cursor at top center of game window
+     * 在GUI渲染完成后触发，用于在屏幕顶部显示实体的血条和韧性条
+     * Triggered after GUI rendering completes, used to display entity health bar and toughness bar at top of screen
+     * <p>
+     * 处理逻辑包括：
+     * Processing logic includes:
+     * - 更新缓存的配置值（性能优化）
+     * Update cached configuration values (performance optimization)
+     * - 检查配置是否启用血条显示
+     * Check if health bar display is enabled in config
+     * - 验证玩家和游戏状态
+     * Validate player and game state
+     * - 获取玩家正在查看的实体
+     * Get entity player is looking at
+     * - 过滤玩家和死亡实体
+     * Filter out players and dead entities
+     * - 检查距离限制（性能优化）
+     * Check distance limit (performance optimization)
+     * - 验证实体生命值有效性（模组兼容性）
+     * Validate entity health value validity (mod compatibility)
+     * - 计算生命值和韧性值百分比
+     * Calculate health and toughness percentages
+     * - 调用HealthBarRenderer渲染血条和韧性条
+     * Call HealthBarRenderer to render health bar and toughness bar
+     *
+     * @param event GUI渲染事件
+     *              GUI rendering event
      */
     @SubscribeEvent
     public static void onRenderGuiOverlay(final RenderGuiEvent.Post event) {

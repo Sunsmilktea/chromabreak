@@ -6,14 +6,35 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static com.github.chromabreak.tool.JsonTool.isValidJson;
+
 /**
- * ChromaBreak模组配置类
+ * Config - 模组配置管理器
+ * Mod Configuration Manager
  * <p>
- * ChromaBreak Mod Configuration Class
+ * 负责管理ChromaBreak模组的所有配置选项，使用NeoForge的配置系统
+ * Responsible for managing all configuration options for ChromaBreak mod, using NeoForge's configuration system
  * <p>
- * 血条HUD功能配置类
+ * 主要配置类别包括：
+ * Main configuration categories include:
+ * - 血条显示控制配置（是否显示、尺寸、位置等）
+ * Health bar display control (show/hide, size, position, etc.)
+ * - 血条外观配置（颜色、透明度、背景等）
+ * Health bar appearance (colors, transparency, background, etc.)
+ * - 生物生成配置（帽子生成、实体配置等）
+ * Mob spawn configuration (hat spawning, entity configuration, etc.)
+ * - 模组兼容性配置（绕过韧性系统的模组和物品）
+ * Mod compatibility configuration (mods and items that bypass toughness system)
+ * - 韧性削减配置（基于防御值的韧性削减幅度）
+ * Toughness reduction configuration (reduction percentage based on defense)
+ * - 世界生成配置（橙色水晶晶洞生成概率等）
+ * World generation configuration (orange crystal geode probability, etc.)
  * <p>
- * Health Bar HUD Configuration Class
+ * 使用枚举模式确保单例，所有配置项都是静态常量
+ * Uses enum pattern to ensure singleton, all configuration items are static constants
+ * <p>
+ * 配置项使用NeoForge的ModConfigSpec系统，支持热重载和配置文件管理
+ * Configuration items use NeoForge's ModConfigSpec system, supporting hot reloading and config file management
  */
 public enum Config {
     ;
@@ -128,8 +149,7 @@ public enum Config {
      * or
      * {"entityType":"minecraft:spider","maxHealth":20.0,"maxToughness":80.0,"toughnessColors":{"orange":0.4,"yellow":0.3,"green":0.2,"white":0.1}}
      */
-    @SuppressWarnings("unchecked")
-    public static final ModConfigSpec.ConfigValue<List<?>> ENTITY_CONFIGS = Config.BUILDER
+    public static final ModConfigSpec.ConfigValue<List<? extends String>> ENTITY_CONFIGS = Config.BUILDER
             .comment(
                     "Entity configuration list (JSON format).\n",
                     "实体配置列表（JSON格式）\n",
@@ -138,7 +158,12 @@ public enum Config {
                     "Available colors (7 types, one-to-one with Minecraft dyes): red, blue, green, yellow, white, black, orange\n",
                     "可用颜色（7种，与Minecraft染料一一对应）：red, blue, green, yellow, white, black, orange"
             )
-            .defineList("entityConfigs", Collections.emptyList(), obj -> obj instanceof String);
+            .defineList(
+                    "entityConfigs",
+                    Collections::emptyList,  // 默认空列表（supplier）
+                    () -> "{ \"example\": \"replace with real JSON\" }",  // 在配置 GUI 中点击“+”添加新条目时的默认值（一个占位 JSON 字符串）
+                    obj -> obj instanceof String && !((String) obj).isBlank() && isValidJson((String) obj)  // 验证：必须是非空字符串且是合法 JSON
+            );
 
     // ===== 模组兼容性配置 =====
     // ===== Mod Compatibility Configuration =====
@@ -149,7 +174,6 @@ public enum Config {
      * List of mod IDs that can bypass the toughness system
      * Damage from these mods will deal direct health damage, bypassing the toughness system
      */
-    @SuppressWarnings("unchecked")
     public static final ModConfigSpec.ConfigValue<List<? extends String>> BYPASS_MOD_IDS = Config.BUILDER
             .comment(
                     "List of mod IDs that can bypass the toughness system.\n",
@@ -159,7 +183,12 @@ public enum Config {
                     "这些模组的伤害会直接造成血量伤害，不经过韧性系统。\n",
                     "示例：cgm, avaritia, techguns, mekanism"
             )
-            .defineList("bypassModIds", Arrays.asList("cgm", "combatguns", "guns", "avaritia", "mekanism", "techguns", "immersiveengineering"), obj -> obj instanceof String);
+            .defineList(
+                    "bypassModIds",
+                    () -> Arrays.asList("cgm", "combatguns", "guns", "avaritia", "mekanism", "techguns", "immersiveengineering"),  // 默认值
+                    () -> "",  // 在配置界面点击“+”添加新元素时的默认值（空字符串，玩家可以直接输入）
+                    obj -> obj instanceof String && !((String) obj).isBlank()  // 验证：必须是字符串且不为空白
+            );
 
     /**
      * 可以绕过韧性系统的物品ID模式列表
@@ -168,7 +197,6 @@ public enum Config {
      * List of item ID patterns that can bypass the toughness system
      * Damage from item matching these patterns will deal direct health damage, bypassing the toughness system
      */
-    @SuppressWarnings("unchecked")
     public static final ModConfigSpec.ConfigValue<List<? extends String>> BYPASS_ITEM_PATTERNS = Config.BUILDER
             .comment(
                     "List of item ID patterns that can bypass the toughness system.\n",
@@ -178,10 +206,14 @@ public enum Config {
                     "可以绕过韧性系统的物品ID模式列表。\n",
                     "匹配这些模式的物品造成的伤害会直接造成血量伤害，不经过韧性系统。\n",
                     "模式使用 startsWith 匹配，所以 'avaritia:infinity' 会匹配所有以 'avaritia:infinity' 开头的物品。\n",
-                    "示例：avaritia:infinity, cgm:, techguns:"
+                    "示例：avaritia:infinity, cgm:, combatguns:, guns:, techguns:"
             )
-            .defineList("bypassItemPatterns", Arrays.asList("avaritia:infinity", "cgm:", "combatguns:", "guns:", "techguns:"), obj -> obj instanceof String);
-
+            .defineList(
+                    "bypassItemPatterns",
+                    () -> Arrays.asList("avaritia:infinity", "cgm:", "combatguns:", "guns:", "techguns:"),  // 默认值供应商
+                    () -> "",  // 当在配置 GUI 中点击“添加”时，新元素的默认值（这里是空字符串）
+                    obj -> obj instanceof String  // 验证器
+            );
     // ===== 韧性削减配置 =====
     // ===== Toughness Reduction Configuration =====
     /**
