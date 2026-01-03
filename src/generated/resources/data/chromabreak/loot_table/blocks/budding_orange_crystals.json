@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "chromabreak:budding_orange_crystals"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "chromabreak:blocks/budding_orange_crystals"
+}
