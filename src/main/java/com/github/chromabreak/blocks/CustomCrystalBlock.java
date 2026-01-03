@@ -54,8 +54,9 @@ public class CustomCrystalBlock extends Block {
      *                   <p>
      *                   设计原则：使用数据驱动的掉落物表，不在代码中硬编码掉落物逻辑
      *                   Design principle: Uses data-driven loot tables, doesn't hardcode drop logic in code
+     * @param orange
      */
-    public CustomCrystalBlock(final Properties properties) {
+    public CustomCrystalBlock(final Properties properties, final BuddingCrystalsBlock.CrystalColor orange) {
         super(properties);
     }
 

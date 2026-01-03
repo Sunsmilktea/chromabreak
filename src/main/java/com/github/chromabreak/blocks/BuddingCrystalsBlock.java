@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.AmethystClusterBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * BuddingCrystalsBlock - 通用水晶母岩方块类
@@ -120,13 +121,9 @@ public class BuddingCrystalsBlock extends Block {
      *               <p>
      *               生长几率：每个方向10%，每个游戏刻平均有60%的几率至少有一个方向尝试生长
      *               Growth probability: 10% per direction, average 60% chance per game tick for at least one direction to attempt growth
-     * @param state  当前方块状态 Current block state
-     * @param level  服务器级别 Server level
-     * @param pos    方块位置 Block position
-     * @param random 随机源 Random source
      */
     @Override
-    public void randomTick(final BlockState state, final ServerLevel level, final BlockPos pos, final RandomSource random) {
+    public void randomTick(final @NotNull BlockState state, final @NotNull ServerLevel level, final @NotNull BlockPos pos, final @NotNull RandomSource random) {
         // 模拟原版紫水晶母岩生长机制：每个表面有20%几率尝试生长
         // Simulate vanilla budding amethyst growth: each face has 20% chance to attempt growth
         for (final Direction direction : Direction.values()) {
@@ -251,22 +248,15 @@ public class BuddingCrystalsBlock extends Block {
      * @return 小芽方块状态 Small bud block state
      */
     private BlockState getSmallBudForColor() {
-        switch (this.color) {
-            case BLACK:
-                return ModBlocks.SMALL_CRYSTALS_BLACK_BUD.get().defaultBlockState();
-            case WHITE:
-                return ModBlocks.SMALL_CRYSTALS_WHITE_BUD.get().defaultBlockState();
-            case YELLOW:
-                return ModBlocks.SMALL_CRYSTALS_YELLOW_BUD.get().defaultBlockState();
-            case GREEN:
-                return ModBlocks.SMALL_CRYSTALS_GREEN_BUD.get().defaultBlockState();
-            case BLUE:
-                return ModBlocks.SMALL_CRYSTALS_BLUE_BUD.get().defaultBlockState();
-            case RED:
-                return ModBlocks.SMALL_CRYSTALS_RED_BUD.get().defaultBlockState();
-            default:
-                return ModBlocks.SMALL_CRYSTALS_ORANGE_BUD.get().defaultBlockState();
-        }
+        return switch (this.color) {
+            case BLACK -> ModBlocks.SMALL_CRYSTALS_BLACK_BUD.get().defaultBlockState();
+            case WHITE -> ModBlocks.SMALL_CRYSTALS_WHITE_BUD.get().defaultBlockState();
+            case YELLOW -> ModBlocks.SMALL_CRYSTALS_YELLOW_BUD.get().defaultBlockState();
+            case GREEN -> ModBlocks.SMALL_CRYSTALS_GREEN_BUD.get().defaultBlockState();
+            case BLUE -> ModBlocks.SMALL_CRYSTALS_BLUE_BUD.get().defaultBlockState();
+            case RED -> ModBlocks.SMALL_CRYSTALS_RED_BUD.get().defaultBlockState();
+            default -> ModBlocks.SMALL_CRYSTALS_ORANGE_BUD.get().defaultBlockState();
+        };
     }
 
     /**
@@ -277,7 +267,7 @@ public class BuddingCrystalsBlock extends Block {
      * @return 是否可以进行随机tick Whether random tick can occur
      */
     @Override
-    public boolean isRandomlyTicking(final BlockState state) {
+    public boolean isRandomlyTicking(final @NotNull BlockState state) {
         return true;
     }
 
