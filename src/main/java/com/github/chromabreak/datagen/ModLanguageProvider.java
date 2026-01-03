@@ -22,11 +22,15 @@ public class ModLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         // 所有物品/方块都走这个方法
-        addItem(ModItems.ORANGE_CRYSTAL_SHARD, "Orange Crystal Shard", "橙色水晶碎片");
-        addBlock(ModBlocks.SMALL_CRYSTALS_ORANGE_BUD, "Small Orange Crystal Bud", "小型橙色水晶萌芽");
-        addBlock(ModBlocks.CRYSTALS_ORANGE_CLUSTER, "Orange Crystal Cluster", "橙色水晶簇");
-        addBlock(ModBlocks.BUDDING_ORANGE_CRYSTALS, "Budding Orange Crystals", "橙色水晶母岩");
-        addBlock(ModBlocks.CRYSTALS_ORANGE_BLOCK, "Block of Orange Crystals", "橙色水晶块");
+        addItem(ModItems.ORANGE_CRYSTAL_SHARD, "Orange Crystal Shard", "橙水晶碎片");
+
+        addBlock(ModBlocks.SMALL_CRYSTALS_ORANGE_BUD, "Small Orange Crystal Bud", "小型橙晶芽");
+        addBlock(ModBlocks.MEDIUM_CRYSTALS_ORANGE_BUD, "Medium Orange Crystal Bud", "中型橙晶芽");
+        addBlock(ModBlocks.LARGE_CRYSTALS_ORANGE_BUD, "Large Orange Crystal Bud", "大型橙晶芽");
+        addBlock(ModBlocks.CRYSTALS_ORANGE_CLUSTER, "Orange Crystal Cluster", "橙水晶簇");
+
+        addBlock(ModBlocks.BUDDING_ORANGE_CRYSTALS, "Budding Orange Crystals", "橙水晶母岩");
+        addBlock(ModBlocks.CRYSTALS_ORANGE_BLOCK, "Block of Orange Crystals", "橙水晶块");
 
         //add("itemGroup.chromabreak.main", "ChromaBreak", "彩晶破晓");
     }

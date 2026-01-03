@@ -1,5 +1,9 @@
 {
-  "block.chromabreak.budding_orange_crystals": "橙色水晶母岩",
-  "block.chromabreak.crystals_orange_cluster": "橙色水晶簇",
-  "item.chromabreak.orange_crystal_shard": "橙色水晶碎片"
+  "block.chromabreak.budding_orange_crystals": "橙水晶母岩",
+  "block.chromabreak.crystals_orange_block": "橙水晶块",
+  "block.chromabreak.crystals_orange_cluster": "橙水晶簇",
+  "block.chromabreak.large_crystals_orange_bud": "大型橙晶芽",
+  "block.chromabreak.medium_crystals_orange_bud": "中型橙晶芽",
+  "block.chromabreak.small_crystals_orange_bud": "小型橙晶芽",
+  "item.chromabreak.orange_crystal_shard": "橙水晶碎片"
 }

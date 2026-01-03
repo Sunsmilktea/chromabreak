@@ -1,5 +1,9 @@
 {
   "block.chromabreak.budding_orange_crystals": "Budding Orange Crystals",
+  "block.chromabreak.crystals_orange_block": "Block of Orange Crystals",
   "block.chromabreak.crystals_orange_cluster": "Orange Crystal Cluster",
+  "block.chromabreak.large_crystals_orange_bud": "Large Orange Crystal Bud",
+  "block.chromabreak.medium_crystals_orange_bud": "Medium Orange Crystal Bud",
+  "block.chromabreak.small_crystals_orange_bud": "Small Orange Crystal Bud",
   "item.chromabreak.orange_crystal_shard": "Orange Crystal Shard"
 }
