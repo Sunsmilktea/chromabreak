@@ -18,11 +18,11 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(final HolderLookup.Provider provider) {
-        tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlocks.CRYSTALS_ORANGE_BLOCK.get())
                 .add(ModBlocks.CRYSTALS_ORANGE_CLUSTER.get());
 
-        tag(BlockTags.NEEDS_STONE_TOOL)
+        this.tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(ModBlocks.CRYSTALS_ORANGE_BLOCK.get())
                 .add(ModBlocks.CRYSTALS_ORANGE_CLUSTER.get());
     }

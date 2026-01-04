@@ -155,6 +155,10 @@ public class ChromaBreak {
             // Initialize world generation
             com.github.chromabreak.world.ModWorldGeneration.initialize();
 
+            // 初始化网络系统
+            // Initialize network system
+            ChromaBreak.LOGGER.info("ChromaBreak网络系统初始化 - ChromaBreak network system initialization");
+
             // 记录通用设置完成日志
             // Log common setup completion
             ChromaBreak.LOGGER.info("ChromaBreak通用设置完成 - ChromaBreak common setup completed");

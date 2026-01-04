@@ -2,6 +2,8 @@ package com.github.chromabreak.render;
 
 import com.github.chromabreak.system.ToughnessColor;
 import net.minecraft.client.gui.GuiGraphics;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import java.awt.*;
 
@@ -32,7 +34,11 @@ import java.awt.*;
  * <p>
  * 支持通过配置文件自定义血条外观和颜色
  * Supports customizing health bar appearance and colors through configuration files
+ * <p>
+ * 注意：这是一个客户端专用类，不会在服务器端加载
+ * Note: This is a client-only class and will not load on server side
  */
+@OnlyIn(Dist.CLIENT)
 public enum HealthBarRenderer {
     ;
 
