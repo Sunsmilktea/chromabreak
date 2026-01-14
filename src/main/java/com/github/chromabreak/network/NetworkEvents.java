@@ -28,7 +28,9 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
  * Thread-safe: Ensures safe operations in multi-threaded environments
  */
 @net.neoforged.fml.common.EventBusSubscriber(modid = ChromaBreak.MODID)
-public class NetworkEvents {
+public enum NetworkEvents {
+    ;
+
     /**
      * 注册数据包处理器
      * Register packet handlers

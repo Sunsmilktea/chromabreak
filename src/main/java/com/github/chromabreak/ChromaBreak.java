@@ -151,10 +151,6 @@ public class ChromaBreak {
             // Load entity configurations
             EntityConfigLoader.loadEntityConfigs();
 
-            // 初始化世界生成
-            // Initialize world generation
-            com.github.chromabreak.world.ModWorldGeneration.initialize();
-
             // 初始化网络系统
             // Initialize network system
             ChromaBreak.LOGGER.info("ChromaBreak网络系统初始化 - ChromaBreak network system initialization");

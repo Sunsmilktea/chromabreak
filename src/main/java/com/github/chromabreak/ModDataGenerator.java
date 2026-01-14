@@ -93,24 +93,41 @@ public enum ModDataGenerator {
         final PackOutput packOutput = generator.getPackOutput();
         final ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         final CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+
+        // 注册战利品列表数据提供者，生成方块的战利品表JSON文件
+        // Register loot table provider to generate block loot table JSON files
         generator.addProvider(event.includeServer(), new LootTableProvider(packOutput, Collections.emptySet(),
                 List.of(new LootTableProvider.SubProviderEntry(ModBlockLootTableProvider::new, LootContextParamSets.BLOCK)), lookupProvider));
 
-
+        // 注册方块标签提供者，生成方块标签JSON文件
+        // Register block tags provider to generate block tags JSON files
         final BlockTagsProvider blockTagsProvider = new ModBlockTagsProvider(packOutput, lookupProvider, existingFileHelper);
         generator.addProvider(event.includeServer(), blockTagsProvider);
+
+        // 注册物品标签提供者，依赖于方块标签提供者，生成物品标签JSON文件
+        // Register item tags provider (depends on block tags provider) to generate item tags JSON files
         generator.addProvider(event.includeServer(), new ModItemTagsProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper));
 
+        // 注册世界生成数据提供者，生成世界生成配置JSON文件
+        // Register world generation provider to generate worldgen configuration JSON files
+        generator.addProvider(event.includeServer(), new ModWorldGenerationProvider(packOutput, lookupProvider));
 
+        // 注册英文语言文件提供者，生成en_us.json语言文件
+        // Register English language provider to generate en_us.json language file
         generator.addProvider(event.includeClient(), new ModLanguageProvider(packOutput, "en_us"));
+
+        // 注册中文语言文件提供者，生成zh_cn.json语言文件
+        // Register Chinese language provider to generate zh_cn.json language file
         generator.addProvider(event.includeClient(), new ModLanguageProvider(packOutput, "zh_cn"));
 
-        // 注册方块数据提供者
-        // Register block data provider
+        // 注册方块数据提供者，生成方块状态JSON(blockstates/)和方块模型JSON(models/block/)
+        // Register block data provider to generate:
+        // - Block state JSON files (blockstates/)
+        // - Block model JSON files (models/block/)
         generator.addProvider(event.includeClient(), new ModBlockProvider(packOutput, existingFileHelper));
 
-        // 注册物品数据提供者
-        // Register item data provider
+        // 注册物品数据提供者，生成物品模型JSON(models/item/)
+        // Register item data provider to generate item model JSON files (models/item/)
         generator.addProvider(event.includeClient(), new ModItemProvider(packOutput, existingFileHelper));
     }
 }

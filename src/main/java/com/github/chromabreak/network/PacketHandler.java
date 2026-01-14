@@ -41,7 +41,8 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
  * - 事件通知：通知客户端或服务器特定事件的发生
  * Event notification: Notifies client or server of specific events
  */
-public class PacketHandler {
+public enum PacketHandler {
+    ;
     /**
      * 模组网络通道ID
      * Mod network channel ID
@@ -71,8 +72,8 @@ public class PacketHandler {
      *              Packet handler registration event
      */
     public static void register(final RegisterPayloadHandlersEvent event) {
-        final PayloadRegistrar registrar = event.registrar(CHANNEL_ID.toString())
-                .versioned(PROTOCOL_VERSION);
+        final PayloadRegistrar registrar = event.registrar(PacketHandler.CHANNEL_ID.toString())
+                .versioned(PacketHandler.PROTOCOL_VERSION);
 
         ChromaBreak.LOGGER.info("注册ChromaBreak网络数据包处理器 - Registering ChromaBreak network packet handlers");
 

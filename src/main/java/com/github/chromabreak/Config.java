@@ -149,7 +149,7 @@ public enum Config {
      * or
      * {"entityType":"minecraft:spider","maxHealth":20.0,"maxToughness":80.0,"toughnessColors":{"orange":0.4,"yellow":0.3,"green":0.2,"white":0.1}}
      */
-    public static final ModConfigSpec.ConfigValue<List<? extends String>> ENTITY_CONFIGS = Config.BUILDER
+    public static final ModConfigSpec.ConfigValue<List<?>> ENTITY_CONFIGS = Config.BUILDER
             .comment(
                     "Entity configuration list (JSON format).\n",
                     "实体配置列表（JSON格式）\n",
@@ -161,7 +161,7 @@ public enum Config {
             .defineList(
                     "entityConfigs",
                     Collections::emptyList,  // 默认空列表（supplier）
-                    () -> "{ \"example\": \"replace with real JSON\" }",  // 在配置 GUI 中点击“+”添加新条目时的默认值（一个占位 JSON 字符串）
+                    // 在配置 GUI 中点击“+”添加新条目时的默认值（一个占位 JSON 字符串）
                     obj -> obj instanceof String && !((String) obj).isBlank() && isValidJson((String) obj)  // 验证：必须是非空字符串且是合法 JSON
             );
 
@@ -251,48 +251,6 @@ public enum Config {
                     "默认值：0.35（35%）。"
             )
             .defineInRange("toughnessReductionMax", 0.35, 0.0, 1.0);
-
-    // ===== 世界生成配置 =====
-    // ===== World Generation Configuration =====
-    /**
-     * 橙色水晶晶洞生成概率（相对于紫水晶晶洞）
-     * 双精度浮点数配置选项，默认值为0.8（比紫水晶晶洞小20%）
-     * 范围从0.0到1.0，0.0表示不生成，1.0表示与紫水晶晶洞相同概率
-     * <p>
-     * Orange crystal geode generation probability (relative to amethyst geodes)
-     * Double configuration option with default value 0.8 (20% less than amethyst geodes)
-     * Range from 0.0 to 1.0, 0.0 means no generation, 1.0 means same probability as amethyst geodes
-     */
-    public static final ModConfigSpec.DoubleValue ORANGE_CRYSTAL_GEODE_PROBABILITY = Config.BUILDER
-            .comment(
-                    "Orange crystal geode generation probability (relative to amethyst geodes).\n",
-                    "Range: 0.0 - 1.0, 0.0 means no generation, 1.0 means same probability as amethyst geodes.\n",
-                    "Default: 0.8 (20% less than amethyst geodes).\n",
-                    "橙色水晶晶洞生成概率（相对于紫水晶晶洞）。\n",
-                    "范围：0.0 - 1.0，0.0表示不生成，1.0表示与紫水晶晶洞相同概率。\n",
-                    "默认值：0.8（比紫水晶晶洞小20%）。"
-            )
-            .defineInRange("orangeCrystalGeodeProbability", 0.8, 0.0, 1.0);
-
-    /**
-     * 世界生成调试模式
-     * 布尔值配置选项，默认值为false（禁用）
-     * 启用后会在控制台输出世界生成相关的调试信息
-     * <p>
-     * World generation debug mode
-     * Boolean configuration option with default value false (disabled)
-     * When enabled, outputs world generation debug information to console
-     */
-    public static final ModConfigSpec.BooleanValue WORLD_GEN_DEBUG = Config.BUILDER
-            .comment(
-                    "World generation debug mode.\n",
-                    "When enabled, outputs world generation debug information to console.\n",
-                    "Useful for verifying if orange crystal geodes are generating correctly.\n",
-                    "世界生成调试模式。\n",
-                    "启用后会在控制台输出世界生成相关的调试信息。\n",
-                    "用于验证橙色水晶晶洞是否正确生成。"
-            )
-            .define("worldGenDebug", false);
 
     /**
      * 配置规范实例
